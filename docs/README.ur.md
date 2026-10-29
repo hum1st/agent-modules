@@ -14,86 +14,35 @@
   <a href="README.ur.md">اردو</a>
 </p>
 
-# Agent Bay
-
-<p dir="rtl">
-
-<strong>کوڈنگ ایجنٹس کے لیے پلگ‑ان صلاحیت ماڈیول</strong> — Git سے skills اور rules شامل، اپ گریڈ اور پھیلائیں؛ Cursor، Claude Code، Codex، GitHub Copilot وغیرہ میں۔
-
-</p>
+**Agent Bay** — کوڈنگ ایجنٹس (Cursor، Claude Code، Codex، GitHub Copilot، وغیرہ) کے لیے **skills** اور **rules**، Git سے حاصل شدہ۔
 
 ---
 
-<p dir="rtl">
+## Installation
 
-## مقاصد
+[Git](https://git-scm.com/downloads) انسٹال کریں (Windows پر، نیچے دی گئی کمانڈز کے لیے **Git Bash** استعمال کریں)۔
 
-Agent Bay ایک اوپن سورس ٹول (منصوبہ بندی میں) ہے جو ٹیموں اور افراد کے لیے <strong>بکھری ہوئی ایجنٹ کنفیگ، کمزور ورژن کنٹرول اور مشین بدلنے پر سیٹ اپ کھو جانا</strong> جیسے مسائل حل کرتا ہے۔
+```sh
+git clone https://github.com/hum1st/agent-bay.git ~/.agentBay
+```
 
-ہم <strong>Agent Skills</strong> (کھلا فارمیٹ <a href="https://agentskills.io"><code>SKILL.md</code></a>) اور <strong>کوڈنگ ایجنٹ rules</strong> (جیسے <code>.cursor/rules</code>، <code>AGENTS.md</code>) کو <strong>پلگ‑ان ماڈیول</strong> سمجھتے ہیں:
+اپنی مقامی کاپی اپ ڈیٹ کریں:
 
-1. <strong>عمودی اپ گریڈ</strong> — Git سے صلاحیت کے پیک کھینچیں یا اپ ڈیٹ کریں تاکہ ایجنٹس جلد نئے workflow، معیارات اور ڈومین knowledge حاصل کریں۔
-2. <strong>افقی پھیلاؤ</strong> — ایک ہی ماڈیول ہر پروڈکٹ کے native راستوں (Cursor، Claude Code، Codex، Copilot، …) پر map کریں، dotfiles ہاتھ سے کاپی کیے بغیر۔
-3. <strong>آڈٹ کے قابل تعاون</strong> — Git سچائی کا ماخذ؛ انسٹال copies منظم artifacts، incremental sync اور صفائی کے ساتھ۔
-4. <strong>Skills بمقابلہ Rules</strong> — demand پر <strong>Skills</strong> اور ہمیشہ یا path‑scoped <strong>Rules</strong> الگ tracks پر، صنعت کے skill رجحان کے ساتھ <code>alwaysApply</code> / globs جہاں درکار۔
-
-Agent Bay <strong>ویب crawler نہیں</strong> اور عوامی skill registries (جیسے <a href="https://skills.sh">skills.sh</a> / <code>npx skills</code>) <strong>کی جگہ نہیں</strong> لیتا۔ یہ <strong>آپ کے Git repos</strong> کو <strong>ماڈیول انسٹال اور کثیر channel deploy</strong> کے authority کے طور پر دیکھتا ہے۔
-
-</p>
+```sh
+git -C ~/.agentBay pull --ff-only
+```
 
 ---
 
-<p dir="rtl">
+## Links
 
-## استعارہ: bay
-
-ربوٹ پر <strong>توسیعی slot (bay)</strong> کی طرح: ہر bay میں ایک صلاحیت ماڈیول (skill pack، rule fragment، یا catalog bundle)۔ بدلنا، شامل کرنا، اپ گریڈ — <strong>تیز</strong> اور <strong>دہرانے کے قابل</strong> ہونا چاہیے۔
-
-</p>
+- [Agent Skills specification](https://agentskills.io)
+- [Anthropic example skills](https://github.com/anthropics/skills)
 
 ---
 
-<p dir="rtl">
+## License
 
-## حالت
-
-<strong>ابتدائی مرحلہ</strong> — یہ repo مقاصد، conventions اور implementation متعین کرتی ہے؛ API اور CLI ابھی stable نہیں۔
-
-ماڈیول formats اور sync semantics پر Issue / PR خوش آمدید۔
-
-</p>
-
----
-
-<p dir="rtl">
-
-## دستاویزات اور conventions
-
-- **انگریزی** ڈیفالٹ انٹری: <a href="../README.md">README.md</a>۔ دیگر زبانیں اس ڈائریکٹری میں <code>README.&lt;locale&gt;.md</code> (اوپر language switcher)۔
-- **Maintainer** artifacts — source comments، <code>.cursor/rules</code>، <code>.cursor/skills</code> — **آسان چینی** (简体中文) میں، سوائے صارف locale docs کے۔
-- **ورژن** <a href="../package.json">package.json</a> میں SemVer (<code>1.0.0</code> سے)؛ Git tags <code>v</code> prefix۔ Release bump rules <code>release</code> skill میں۔
-
-</p>
-
----
-
-<p dir="rtl">
-
-## لنکس
-
-- <a href="https://agentskills.io">Agent Skills specification</a>
-- <a href="https://github.com/anthropics/skills">Anthropic example skills</a>
-
-</p>
-
----
-
-<p dir="rtl">
-
-## لائسنس
-
-<a href="../LICENSE">MIT</a>
-
-</p>
+[MIT](../LICENSE)
 
 <!-- agent-bay-readme-locale:ur via readme-translations-write -->

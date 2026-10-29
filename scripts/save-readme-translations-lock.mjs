@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 内部：手动刷新 lock（维护者应急用）。Agent / release 须使用 npm run docs:readme-translate，禁止直接改 docs 译文或单独依赖本脚本。
+ * 内部：手动刷新 lock（维护者应急用）。/release 须在全部 locale 经 readme-translations-apply 对齐后由写入接口自动更新 lock；禁止手改 docs 译文。
  */
 import { saveReadmeTranslationsLock } from "./readme-translations-lib.mjs";
 

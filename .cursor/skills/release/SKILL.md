@@ -78,29 +78,68 @@ git log -5 --oneline
 
 按上表拟定 subject；确认暂存 diff **无** AI trailer。
 
-### 1b. README 译文（涉及 `README.md` 时）
+### 1b. README 译文（`README.md` 变更或 lock 不一致时）
 
-**禁止** 在 release 流程中 **直接编辑** `docs/README.*.md` 或手改 **`docs/README.lock.json`**。译文 **只能** 经翻译接口写入（`scripts/readme-translations-write.mjs`，由 CLI 调用）；lock 在 **全部 locale 结构对齐后由写入接口自动更新**。
+**禁止** 直接编辑 `docs/README.*.md` 或手改 **`docs/README.lock.json`**。译文 **只能** 经 `scripts/readme-translations-apply.mjs`（内部调用 `readme-translations-write.mjs`）落盘；**全部 locale 结构对齐后 lock 自动更新**。
 
-1. 若 **根目录 `README.md`** 有改动：在仓库根目录执行（需 `README_TRANSLATE_API_KEY` 或 `OPENAI_API_KEY`，可选 `README_TRANSLATE_API_URL` / `README_TRANSLATE_MODEL`）：
+#### 1b.1 对比 lock
+
+在仓库根目录：
 
 ```bash
-npm run docs:readme-translate
+node scripts/readme-translations-status.mjs
 ```
 
-仅单语言时：`npm run docs:readme-translate -- --locale zh-CN`。若已有译文 markdown 正文、仅需经接口落盘：`npm run docs:readme-translate -- --locale zh-CN --body-file /path/to/body.md`（**仍禁止** 直接写 `docs/` 下 README）。
+- 退出码 **0**：译文与 lock 已对齐，可跳过 1b.2。
+- 退出码 **1**：需要同步；输出会列出待处理的 **locales**（与 `scripts/readme-translations-lib.mjs` 中 `LOCALES` 一致：`zh-CN`, `hi`, `es`, `fr`, `ar`, `bn`, `pt`, `ru`, `ur`）。
 
-2. 提交前 **必须** 通过（husky pre-commit 与 CI 亦会执行）：
+提取英文正文（供 subagent 输入，**不含** 文首语言切换器）：
+
+```bash
+node scripts/readme-translations-status.mjs --print-source-body
+```
+
+#### 1b.2 并行 subagent 翻译
+
+对 **每个** 待同步 locale **并行** 启动 **Task subagent**（同一轮内尽量一次发齐，不要串行 nine 次）。
+
+**Subagent 任务模板**（将 `<locale>`、`<locale-label>` 替换为实际值；`<source-body>` 为上一步英文正文）：
+
+```text
+Full Repository Path: <本仓库绝对路径，即 agent-bay 根目录>
+Change Description: Translate the English README body to <locale> (<locale-label>).
+Custom Instructions:
+- Input is markdown body only (no # Agent Bay H1, no language switcher).
+- Preserve heading levels exactly (same count and ## / ### depth as source); translate heading text naturally.
+- Preserve markdown links, code spans, and table structure.
+- Output ONLY the translated body markdown — no fences, no preamble.
+--- SOURCE ---
+<source-body>
+```
+
+Locale 参考：`zh-CN` 简体中文，`hi` हिन्दी，`es` Español，`fr` Français，`ar` العربية（RTL 段落可用 HTML dir="rtl" 若必要），`bn` বাংলা，`pt` Português，`ru` Русский，`ur` اردو。
+
+#### 1b.3 落盘（主 Agent 执行）
+
+每个 subagent 返回的正文写入临时文件（如 `/tmp/agent-bay-readme-<locale>.md`），再 **逐 locale** 调用：
+
+```bash
+node scripts/readme-translations-apply.mjs --locale <locale> --body-file /tmp/agent-bay-readme-<locale>.md
+```
+
+**不要** 跳过 apply 脚本直接写 `docs/`。最后一个 locale 成功且结构一致时，脚本会打印 **`docs/README.lock.json 已更新`**。
+
+#### 1b.4 校验
 
 ```bash
 npm run check:readme-translations
 ```
 
-校验：`README.md` hash 与 lock 一致、各 locale 标题结构与英文一致、且每个 `docs/README.<locale>.md` 含写入 provenance 标记（证明经翻译接口写入）。
+须通过：hash 与 lock 一致、标题结构与英文一致、各文件含 provenance 标记。
 
-3. **不要** 运行 `npm run docs:readme-lock` 代替翻译接口（该脚本仅供维护者应急；Agent release **不得** 调用）。
+推送后 **GitHub Actions**（`.github/workflows/ci.yml`）在 `main` 的 push/PR 上运行 `node scripts/check-readme-translations.mjs`；合并前须绿。
 
-推送后 **GitHub Actions**（`.github/workflows/ci.yml`）在 `main` 的 push/PR 上运行 `npm run ci`；合并前须绿。
+**可选（非 release 主路径）**：`node scripts/translate-readme.mjs` 仍可通过外部翻译 API 落盘；**不得** 在 release 中依赖 `npm run docs:readme-translate`（已从 `package.json` 移除）。
 
 ### 2. 提交（有变更时）
 

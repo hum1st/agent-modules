@@ -13,9 +13,6 @@
   "homepage": "https://github.com/hum1st/agent-bay#readme",
   "scripts": {
     "check:readme-translations": "node scripts/check-readme-translations.mjs",
-    "ci": "npm run check:readme-translations",
-    "docs:readme-translate": "node scripts/translate-readme.mjs",
-    "docs:readme-lock": "node scripts/save-readme-translations-lock.mjs",
     "prepare": "husky"
   },
   "devDependencies": {

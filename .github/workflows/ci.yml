@@ -21,12 +21,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-        env:
-          HUSKY: "0"
 
       - name: README translation lock
-        run: npm run check:readme-translations
+        run: node scripts/check-readme-translations.mjs

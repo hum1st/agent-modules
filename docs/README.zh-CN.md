@@ -14,56 +14,34 @@
   <a href="README.ur.md">اردو</a>
 </p>
 
-# Agent Bay
-
-**面向 coding agent 的可插拔能力模块** — 从 Git 添加、升级并扩展技能与规则，覆盖 Cursor、Claude Code、Codex、GitHub Copilot 等多种 AI 编程工具。
+**Agent Bay** — 面向 coding agent 的 **skills** 与 **rules**（Cursor、Claude Code、Codex、GitHub Copilot 等），源自 Git。
 
 ---
 
-## 项目目标
+## Installation
 
-Agent Bay 是一个开源工具（规划中），用来解决团队和个人在多 Agent 环境下 **能力配置分散、难以版本化、换机器就丢** 的问题。
+安装 [Git](https://git-scm.com/downloads)（在 Windows 上，请使用 **Git Bash** 执行下方命令）。
 
-我们将 **Agent Skills**（开放格式 [`SKILL.md`](https://agentskills.io)）与 **编码 Agent 规则**（如 `.cursor/rules`、`AGENTS.md` 等）当作 **可插拔模块**：
+```sh
+git clone https://github.com/hum1st/agent-bay.git ~/.agentBay
+```
 
-1. **纵向升级** — 从 Git 仓库拉取或更新能力包，让 Agent 迅速获得新工作流、规范与领域知识。
-2. **横向拓展** — 同一套模块 **映射** 到不同产品的原生目录（Cursor / Claude Code / Codex / Copilot …），避免手工复制 dotfiles。
-3. **可审计、可协作** — 权威源码在 Git；安装到本机的是受管副本，支持增量同步与清理。
-4. **分型而非堆砌** — 按需加载的 **Skills** 与常驻/按路径生效的 **Rules** 分轨管理，符合行业从「智能 rule」向 Skill 迁移、同时保留 alwaysApply / globs 的趋势。
+更新本地副本：
 
-Agent Bay **不是** 网页爬虫，也 **不替代** 公共 skill 目录（如 [skills.sh](https://skills.sh) / `npx skills`）；它专注 **自有 Git 真源** 下的 **模块装卸与多通道部署**。
-
----
-
-## 隐喻：扩展坞（Bay）
-
-像机器人身上的 **扩展槽（bay）**：每个 bay 里挂载一个能力模块（skill 包、rule 片段或组合 catalog）。换模块、加模块、升级模块，都应 **快** 且 **可重复**。
+```sh
+git -C ~/.agentBay pull --ff-only
+```
 
 ---
 
-## 状态
-
-**早期阶段** — 本仓库用于定义目标、约定与实现；API 与 CLI 尚未稳定。
-
-欢迎 Issue / PR 讨论模块格式与同步语义。
-
-## 文档与约定
-
-- **英文** 为默认入口：[`README.md`](../README.md)。其他语言见本目录 `README.<locale>.md`（文首语言切换器）。
-- 仓库内 **维护者向** 内容 — 源码注释、`.cursor/rules`、`.cursor/skills` — 使用 **简体中文**，除非文件本身为某 locale 的面向用户文档（如本文件）。
-- **版本号** 以根目录 [`package.json`](../package.json) 的 SemVer 为准（自 `1.0.0` 起）；Git tag 为 `v` 前缀。发布时的 patch/minor 规则见 `release` skill。
-- **译文同步**：**禁止手改** 本目录 `README.<locale>.md`。英文 [`README.md`](../README.md) 变更后运行 **`npm run docs:readme-translate`**（翻译接口写入并自动更新 [`README.lock.json`](./README.lock.json)）。husky 与 [GitHub Actions CI](../.github/workflows/ci.yml) 执行 `npm run check:readme-translations`。
-
----
-
-## 相关链接
+## Links
 
 - [Agent Skills 规范](https://agentskills.io)
-- [Anthropic 示例 Skills](https://github.com/anthropics/skills)
+- [Anthropic 示例 skills](https://github.com/anthropics/skills)
 
 ---
 
-## 许可证
+## License
 
 [MIT](../LICENSE)
 

@@ -1,0 +1,37 @@
+---
+description: 面向用户的 README 写作规范（根 README 与 docs 译文）
+globs: README.md,docs/README.*.md
+alwaysApply: false
+---
+
+# 用户 README 规范
+
+`README.md` 与 `docs/README.<locale>.md` 是**终端用户文档**，不是维护者手册。
+
+## 写什么
+
+- **已交付能力**：仓库里**已经存在**、用户现在就能用的功能（命令、脚本、skill 入口、安装步骤）。一条对应一件实事。
+- **使用**：与上述能力对应的最少步骤（如 Git、clone 路径、已提供的脚本或 skill 名称）。
+- **链接与许可证**：外部规范、示例、MIT。
+- 文首 **语言切换器**（多语言 README）若已提供，保留即可。
+
+未实现或未合并的能力**不要**写进 README（包括 tagline 里也不要承诺尚未存在的 sync/upgrade 等，除非代码已落地）。
+
+不要在正文重复「英文为默认入口」「译文路径」等 i18n 实现说明。
+
+## 不要写什么
+
+- **状态与规划**：Status、Early stage、Roadmap、Planned、Coming soon、「尚未稳定」、欢迎 Issue/PR 充当路线图等。
+- 仓库维护流程：`/release`、lock 文件、husky、CI、subagent 翻译、脚本路径、`package.json` SemVer、tag 规则。
+- 贡献者约定：`.cursor/rules`、skill 语言、commit 格式、禁止手改译文等（见 `zh-cn-maintainer`、`release` skill）。
+- 实现细节：Node/npm、husky、POSIX 实现选型、目录结构理由，除非用户**必须知道**才能成功操作（例如 Windows 用 Git Bash 才能跑 shell 命令时，一句即可）。
+
+## 风格
+
+- **简洁**：能删则删；优先短段落与少量章节；避免长 bullet 堆砌。
+- **用户视角**：「你怎么用」，不是「我们怎么建仓库」。
+- **结构对齐**：英文 `README.md` 为结构真源；`docs/` 译文与英文**章节一致**，只翻译自然语言，不增删维护向段落。
+
+## 变更流程（给 Agent，勿写入 README）
+
+- 只改 `README.md` 的用户向内容；译文通过 **`/release`** 同步，禁止手改 `docs/README.*.md`。

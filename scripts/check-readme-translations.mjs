@@ -13,7 +13,7 @@ import {
 function fail(message) {
   console.error(`readme-translations: ${message}`);
   console.error(
-    "请通过翻译接口更新译文: npm run docs:readme-translate（禁止手改 docs/README.*.md）",
+    "请通过 /release skill 更新译文（禁止手改 docs/README.*.md）",
   );
   process.exit(1);
 }
@@ -52,7 +52,7 @@ if (allErrors.length) {
   for (const err of allErrors) {
     console.error(`readme-translations: ${err}`);
   }
-  console.error("请运行: npm run docs:readme-translate");
+  console.error("请运行: node scripts/readme-translations-status.mjs，并按 release skill 同步译文");
   process.exit(1);
 }
 

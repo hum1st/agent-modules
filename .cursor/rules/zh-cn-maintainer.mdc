@@ -16,9 +16,9 @@ Agent Bay 面向国际用户，**根目录 `README.md` 为英文入口**；翻�
 
 ## 面向用户的文档
 
-- 翻译 README 仅位于 `docs/README.<locale>.md`。
-- 编辑 locale 文件时保留目标语言，不要在同一 locale 文件内混用多种语言。
-- **禁止** 手改 `docs/README.<locale>.md` 与 `docs/README.lock.json`。英文 `README.md` 变更后须运行 `npm run docs:readme-translate`（翻译 API + 写入接口，自动更新 lock）；提交前须通过 `npm run check:readme-translations`（husky / CI）。
+- 内容与文风遵循 **`.cursor/rules/readme-user-docs.mdc`**（用户向、简洁、不写维护/实现细节）。
+- 翻译 README 仅位于 `docs/README.<locale>.md`；**禁止** 手改 `docs/` 译文与 `docs/README.lock.json`。
+- 英文 `README.md` 变更后须在 **`/release`** 中同步译文（lock 对比 → subagent → `readme-translations-apply.mjs`）；提交前 `npm run check:readme-translations`（husky / CI）。
 
 ## 例外
 

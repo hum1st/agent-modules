@@ -1,0 +1,29 @@
+---
+description: 面向用户的能力以跨平台 shell 实现，除 Git 外禁止外部运行时依赖
+alwaysApply: true
+---
+
+# 用户能力：Shell 脚本实现
+
+面向**终端用户**的功能（含 Agent 通过 skill 调用的同步、安装、升级等）必须通过 **shell 脚本** 交付，并在 **macOS** 与 **Windows（Git Bash / 随 Git for Windows 提供的 POSIX 环境）** 上可运行。
+
+## 必须
+
+- 使用 **`#!/usr/bin/env sh`**（或经评审的 POSIX `sh` 子集）；逻辑放在 `scripts/`（或后续统一的 `bin/`）下，skill 文档写清相对 **`~/.agentBay`** 的路径与调用方式。
+- 仅依赖本机已安装的 **Git** 及 POSIX 常见内建/工具（如 `sh`、`test`、`mkdir`、`cp`、`rm`、`cd` 等）；Git 操作使用 `git` 子命令。
+- 脚本应 **幂等**、失败时 **非零退出码**、向 stderr 输出可读的英文或中文错误信息（与 skill 约定一致即可）。
+
+## 禁止（用户路径）
+
+- 要求用户安装 **Node.js、Python、Ruby、Go 运行时** 或 **`npm install`** 才能使用面向用户的能力。
+- 在 skill 引导的用户流程中依赖 **curl/wget 拉可执行文件**、**Docker**、**Homebrew/winget** 等（文档链接到 Git 安装页除外）。
+- 用 **`.mjs` / `.py` 等** 作为用户同步/安装的主入口；此类脚本仅可用于**维护者**流程（如 README 翻译校验、CI），且不得被 user-facing skill 列为必需步骤。
+
+## Skill 与脚本分工
+
+- **Skill（`SKILL.md`）**：说明何时 invoke、参数含义、禁止手改 Agent 安装目录等策略。
+- **Shell 脚本**：承载全部可执行逻辑；skill 中给出的命令必须能在仅安装 Git 的机器上直接运行。
+
+## 例外
+
+- 贡献者本地开发、husky、GitHub Actions、README 翻译流水线等 **维护者工具** 不受「用户路径零 Node」限制，但不得在根 `README.md` 的 **Installation** 章节作为用户前置步骤。

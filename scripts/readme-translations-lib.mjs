@@ -167,7 +167,7 @@ export function validateWriteProvenance() {
     const text = readFileSync(abs, "utf8");
     if (!WRITE_PROVENANCE_MARKER.test(text)) {
       errors.push(
-        `${rel} 缺少写入 provenance 标记；须通过 npm run docs:readme-translate 写入，禁止手改`,
+        `${rel} 缺少写入 provenance 标记；须通过 readme-translations-apply 写入，禁止手改`,
       );
     }
   }

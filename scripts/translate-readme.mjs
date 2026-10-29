@@ -1,15 +1,12 @@
 #!/usr/bin/env node
 /**
- * 翻译接口 CLI：调用翻译 API，并通过 readme-translations-write 落盘；全部 locale 就绪后自动更新 lock。
+ * 可选：外部翻译 API CLI（非 /release 主路径）。落盘请优先 readme-translations-apply.mjs。
  *
  * 用法：
- *   npm run docs:readme-translate -- [--locale zh-CN] [--body-file path] [--from-existing] [--dry-run]
+ *   node scripts/translate-readme.mjs [--locale zh-CN] [--body-file path] [--from-existing] [--dry-run]
  *
- * - 默认：翻译 LOCALES 全部语言（需 README_TRANSLATE_API_KEY 或 OPENAI_API_KEY）
- * - --locale：仅处理一种语言
- * - --body-file：跳过 API，将译文正文经写入接口落盘
- * - --from-existing：不调用 API，从当前 docs/README.<locale>.md 提取正文后重新经写入接口落盘（补 provenance）
- * - --dry-run：仅打印将处理的 locale
+ * - 默认：调用 API 翻译全部 LOCALES（需 README_TRANSLATE_API_KEY 或 OPENAI_API_KEY）
+ * - --body-file：跳过 API，经写入接口落盘（与 readme-translations-apply 等价）
  */
 import { parseArgs } from "node:util";
 import { readFileSync } from "node:fs";
