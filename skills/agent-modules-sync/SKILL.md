@@ -2,7 +2,7 @@
 name: agent-modules-sync
 description: >-
   全量同步 Agent Modules：检查并升级 npm 全局包 agent-modules、同步内置 agent-modules* skills、
-  对内部订阅配置中所有仓库 git pull 并按 scope 同步 skills/rules。
+  对内部订阅配置中所有仓库 git pull，有 package.json 时安装依赖，并按 scope 同步 skills/rules。
   在用户调用 /agent-modules-sync、要求更新 Agent Modules、或同步已订阅仓库时使用。
 ---
 
@@ -16,6 +16,7 @@ description: >-
 2. **内置 skills**：将 npm 包内 **`skills/agent-modules*`** 同步到各已检测 Agent 的**全局** skills 目录（有变更才复制，已是最新则跳过）。
 3. **订阅仓库**：读取 **`~/.agentModules`** 内部订阅中每一项（**`scope: global`** 或 **`scope: project`** + 项目路径）：
    - 在 **`~/.agentModules/sources/<host>/<org>/<repo>`** 执行 **`git pull --ff-only`**（未 clone 则 clone）；
+   - 若仓库根目录有 **`package.json`**，安装依赖：优先 **`packageManager`**，否则 lockfile（`pnpm-lock.yaml` → `pnpm install`，`yarn.lock` → `yarn install`，`bun.lock` / `bun.lockb` → `bun install`），都没有则 **`npm install`**。无 **`package.json`** 则跳过；
    - 按仓库 **`config.yaml`** 的 **`prefixes`**（无则 fallback）将 **skills/**、**rules/** 同步到对应目录。
 
 ## 前置

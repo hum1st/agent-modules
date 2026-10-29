@@ -2,7 +2,7 @@
 name: agent-modules-add
 description: >-
   将 Git 依赖仓库（如 hum1st/agent-modules-demo）加入 Agent Modules：克隆到 ~/.agentModules/sources/<host>/<org>/<repo>，
-  更新内部订阅配置，并按仓库 config.yaml 中的 prefixes 同步 skills 与 rules。
+  若仓库根目录有 package.json 则安装依赖，更新内部订阅配置，并按仓库 config.yaml 中的 prefixes 同步 skills 与 rules。
   在用户要订阅示例仓库、团队 skill 包、或说「add agent-modules-demo」时使用。
 ---
 
@@ -43,6 +43,8 @@ agent-modules add URL --scope project
 ```
 
 简写：`agent-modules add hum1st/agent-modules-demo --scope global`
+
+克隆完成后，若仓库根目录有 **`package.json`**，CLI 会安装依赖（`packageManager` 字段或 lockfile 对应 `pnpm` / `yarn` / `bun`，否则 **`npm install`**）。随后的 refresh 会再检查一次。无 **`package.json`** 则跳过。
 
 ### 4. 前缀
 

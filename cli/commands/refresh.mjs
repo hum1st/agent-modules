@@ -1,6 +1,7 @@
 import os from 'node:os';
 import { loadGlobalConfig } from '../lib/config.mjs';
 import { ensureRepoCloned } from '../lib/git.mjs';
+import { installRepoDependencies } from '../lib/repo-install.mjs';
 import { globalAgentTargets, projectAgentTargets } from '../lib/agents.mjs';
 import { expandHome, parseGitUrl, repoDir, storageRoot } from '../lib/paths.mjs';
 import { resolvePrefixes } from '../lib/repo-config.mjs';
@@ -74,6 +75,7 @@ export function runRefresh(options = {}) {
     console.log(`  clone: ${dest}`);
 
     ensureRepoCloned(url, dest);
+    installRepoDependencies(dest);
 
     const { prefixes, source, configFile } = resolvePrefixes(dest, entry.prefixes);
     if (!prefixes.length) {

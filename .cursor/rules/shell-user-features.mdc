@@ -31,6 +31,7 @@ alwaysApply: true
 - CLI 依赖 **Node.js 18+** 与 **Git**（clone / pull 订阅仓库）。
 - 子命令应 **幂等**、失败时 **非零退出码**、向 stderr 输出可读错误信息。
 - 同步时 **优先**读取依赖仓库根目录 **`config.yaml`** 的 **`prefixes`**；缺失时使用 **`agent-modules.yaml`** 中该仓库条目的 fallback **`prefixes`**。
+- **`add`** 与 **`refresh`** 在 clone / pull 之后，若仓库根目录有 **`package.json`**，则安装依赖：优先 **`packageManager`** 字段，否则按 lockfile（`pnpm-lock.yaml`、`yarn.lock`、`bun.lock` / `bun.lockb`），都没有则 **`npm install`**。无 **`package.json`** 时跳过。安装失败则非零退出。
 
 ## Skill 与 CLI 分工
 

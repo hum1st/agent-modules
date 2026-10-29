@@ -6,6 +6,7 @@ import {
 } from '../lib/config.mjs';
 import { ensureRepoCloned } from '../lib/git.mjs';
 import { inferPrefixes } from '../lib/infer-prefixes.mjs';
+import { installRepoDependencies } from '../lib/repo-install.mjs';
 import { parseGitUrl, repoDir, storageRoot } from '../lib/paths.mjs';
 import { readRepoConfig } from '../lib/repo-config.mjs';
 import { runRefresh } from './refresh.mjs';
@@ -34,6 +35,7 @@ export function runAdd(url, opts = {}) {
   console.log(`  scope: ${scope}${project ? ` (${project})` : ''}`);
 
   ensureRepoCloned(normalized, dest);
+  installRepoDependencies(dest);
 
   const repoCfg = readRepoConfig(dest);
   let fallbackPrefixes;

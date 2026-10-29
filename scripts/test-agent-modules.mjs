@@ -176,6 +176,74 @@ test('compareSemver orders versions', async () => {
   assert.equal(compareSemver('2.0.0', '1.9.9'), 1);
 });
 
+test('subscribed repo package.json selects install command', async () => {
+  const { resolvePackageManager, installRepoDependencies } = await import('../cli/lib/repo-install.mjs');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'agent-modules-pkg-'));
+  try {
+    assert.equal(resolvePackageManager(root), null);
+
+    const skipped = installRepoDependencies(root, {
+      run() {
+        throw new Error('should not install without package.json');
+      },
+    });
+    assert.deepEqual(skipped, { installed: false, manager: null });
+
+    fs.writeFileSync(path.join(root, 'package.json'), '{"name":"fixture"}\n');
+    assert.equal(resolvePackageManager(root), 'npm');
+
+    fs.writeFileSync(path.join(root, 'pnpm-lock.yaml'), 'lockfileVersion: 9\n');
+    assert.equal(resolvePackageManager(root), 'pnpm');
+
+    fs.writeFileSync(
+      path.join(root, 'package.json'),
+      '{"name":"fixture","packageManager":"yarn@4.0.0"}\n',
+    );
+    assert.equal(resolvePackageManager(root), 'yarn');
+
+    /** @type {string[]} */
+    const calls = [];
+    const installed = installRepoDependencies(root, {
+      log() {},
+      run(command, args, cwd) {
+        calls.push(`${command} ${args.join(' ')} ${cwd}`);
+        return { status: 0 };
+      },
+    });
+    assert.deepEqual(installed, { installed: true, manager: 'yarn' });
+    assert.deepEqual(calls, [`yarn install ${root}`]);
+
+    assert.throws(
+      () =>
+        installRepoDependencies(root, {
+          log() {},
+          run() {
+            return { status: 1 };
+          },
+        }),
+      /yarn install failed/,
+    );
+
+    assert.throws(
+      () =>
+        installRepoDependencies(root, {
+          log() {},
+          run() {
+            const error = new Error('spawn yarn ENOENT');
+            error.code = 'ENOENT';
+            return { status: null, error };
+          },
+        }),
+      /yarn was not found/,
+    );
+
+    fs.writeFileSync(path.join(root, 'package.json'), '{');
+    assert.throws(() => resolvePackageManager(root), /Invalid package.json/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test('parseGitUrl accepts github coordinates in add flow', () => {
   const home = makeIsolatedHome();
   try {
