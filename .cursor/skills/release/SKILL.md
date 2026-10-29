@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 # release — 提交并发布 Agent Bay
 
-本 skill 适用于 **agent-bay** 仓库（`/release`）。**没有** `npm run sync`；流程为 **提交 →（发布时）版本号与 tag → 推送 → GitHub Release**。
+本 skill 适用于 **agent-bay** 仓库（`/release`）。**没有** `npm run sync`；流程为 **提交 →（发布时）版本号与 tag → 推送 → GitHub Release → 监听 CI →（失败则修复并重发）**。
 
 仓库 **SemVer** 以根目录 **`package.json` 的 `version`** 为准，**从 `1.0.0` 起**；Git tag 为 **`v` + 该版本**（例如 `v1.0.0`）。
 
@@ -137,7 +137,7 @@ npm run check:readme-translations
 
 须通过：hash 与 lock 一致、标题结构与英文一致、各文件含 provenance 标记。
 
-推送后 **GitHub Actions**（`.github/workflows/ci.yml`）在 `main` 的 push/PR 上运行 `node scripts/check-readme-translations.mjs`；合并前须绿。
+推送后 **GitHub Actions**（`.github/workflows/ci.yml`，workflow 名 **CI**）在 `main` 的 push/PR 上运行；发版后须 **监听至通过**（见步骤 **5b**）。
 
 **可选（非 release 主路径）**：`node scripts/translate-readme.mjs` 仍可通过外部翻译 API 落盘；**不得** 在 release 中依赖 `npm run docs:readme-translate`（已从 `package.json` 移除）。
 
@@ -199,9 +199,60 @@ gh release create v1.1.0 --title 'v1.1.0' --notes '...'
 
 `<tag>` / `<title>` **必须** 与步骤 4 中 `package.json` 的版本一致（带 `v` 前缀）。
 
+### 5b. 监听 GitHub Actions（推送 / 发版后必做）
+
+在 **步骤 3 的最终推送**（含 `--tags`）与 **步骤 5** 完成后，监听本仓库 **CI** workflow（`.github/workflows/ci.yml`）在 **`main`** 上、对应 **HEAD 提交** 的那次 run，直到 **全部 job 成功** 或确认失败并进入修复循环。
+
+#### 5b.1 定位 run
+
+在仓库根目录（需已安装并登录 **`gh`**）：
+
+```bash
+git rev-parse HEAD
+gh run list --workflow=ci.yml --branch=main --limit=10
+```
+
+从列表中选取 **commit SHA 与当前 HEAD 一致** 且 **event 为 push** 的 run（若刚推送，通常为第一项）。记下 `run-id` 与 `url`。
+
+#### 5b.2 等待结果
+
+```bash
+gh run watch <run-id> --exit-status
+```
+
+- 退出码 **0**：全部 job 通过，进入步骤 **6**。
+- 退出码 **非 0** 或超时：进入 **5b.3**（可先用 `gh run view <run-id> --json status,conclusion,url,jobs` 查看各 job）。
+
+本 workflow 当前 job：
+
+| Job | 含义 | 本地对照 |
+|-----|------|----------|
+| `readme` | README 译文 lock | `npm run check:readme-translations` |
+| `test` | 跨平台 shell 集成测试（ubuntu / macOS / Windows） | `npm test`（Windows 问题在 Git Bash / `AGENTBAY_TEST_SH` 下排查） |
+
+#### 5b.3 CI 失败：诊断
+
+```bash
+gh run view <run-id> --log-failed
+```
+
+按失败 job 在本地复现并修复（**禁止** 为「骗过 CI」跳过 hook 或手改 `docs/README.*.md` / lock，译文仍走 **1b**）。
+
+需要 PR 语境下的简短根因时，可对失败 check 使用 **ci-investigator** subagent；发版后 **main** 上 red 时仍以 **`gh run view --log-failed`** 与本地复现为主。
+
+#### 5b.4 CI 失败：修复并重新发布
+
+1. 修复代码 / 文档 / CI / 测试，按 **提交策略** 新提交（类型通常为 **`fix:`** / **`ci:`** / **`test:`**；若仅 README 英文变更则含 **1b**）。
+2. **版本与 tag**（步骤 4 规则）：
+   - 若 **尚未** 对失败提交打 tag / 发 Release：在当前 HEAD 上按规则 bump，打 tag，执行步骤 **3**、**5**。
+   - 若 **已对失败提交** 推送 tag 并 **`gh release create`**：**不得** 移动或删除远程 tag（除非用户明确要求）。对修复提交 **patch +1**（例 `1.2.0` → `1.2.1`），单独 `chore:` 版本提交，打 **新 tag**，推送 **`main --tags`**，**新建** GitHub Release（或 `gh release create` 新 tag）；在 Release notes 中说明修复 CI。
+3. 从 **5b.1** 起 **再次监听** 新 HEAD 的 CI run，**重复** 直至通过。
+
+未经授权 **不要** 对 `main`/`master` force-push；**不要** 空提交刷 CI。
+
 ### 6. 汇报
 
-用 **简体中文** 总结：提交 hash（如有）、作者 Dennis Chen、subject 格式/长度、**新版本号与 bump 理由（minor/patch）**、tag、推送/Release 结果。
+用 **简体中文** 总结：提交 hash（如有）、作者 Dennis Chen、subject 格式/长度、**新版本号与 bump 理由（minor/patch）**、tag、推送/Release 结果、**CI run 结论与链接**（若经 5b.4 重发，列出最终通过的版本与 tag）。
 
 ## 历史重写
 
