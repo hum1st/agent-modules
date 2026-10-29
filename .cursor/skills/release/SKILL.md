@@ -137,7 +137,7 @@ npm run check:readme-translations
 
 须通过：hash 与 lock 一致、标题结构与英文一致、各文件含 provenance 标记。
 
-推送后 **GitHub Actions**（`.github/workflows/ci.yml`，workflow 名 **CI**）在 `main` 的 push/PR 上运行；发版后须 **监听至通过**（见步骤 **5b**）。
+推送后 **GitHub Actions**（`.github/workflows/publish.yml`，workflow 名 **Publish**）在 `main` 的 push/PR 上运行；**push 到 `main` 且校验通过后** 会自动 **`npm publish`**（见 job **`publish`**）。发版后须 **监听至通过**（见步骤 **5b**）。仓库须配置 secret **`NPM_TOKEN`**（npm 访问令牌，`publish` 权限）。
 
 **可选（非 release 主路径）**：`node scripts/translate-readme.mjs` 仍可通过外部翻译 API 落盘；**不得** 在 release 中依赖 `npm run docs:readme-translate`（已从 `package.json` 移除）。
 
@@ -201,7 +201,7 @@ gh release create v1.1.0 --title 'v1.1.0' --notes '...'
 
 ### 5b. 监听 GitHub Actions（推送 / 发版后必做）
 
-在 **步骤 3 的最终推送**（含 `--tags`）与 **步骤 5** 完成后，监听本仓库 **CI** workflow（`.github/workflows/ci.yml`）在 **`main`** 上、对应 **HEAD 提交** 的那次 run，直到 **全部 job 成功** 或确认失败并进入修复循环。
+在 **步骤 3 的最终推送**（含 `--tags`）与 **步骤 5** 完成后，监听本仓库 **Publish** workflow（`.github/workflows/publish.yml`）在 **`main`** 上、对应 **HEAD 提交** 的那次 run，直到 **全部 job 成功**（含 **npm 发布**）或确认失败并进入修复循环。
 
 #### 5b.1 定位 run
 
@@ -209,7 +209,7 @@ gh release create v1.1.0 --title 'v1.1.0' --notes '...'
 
 ```bash
 git rev-parse HEAD
-gh run list --workflow=ci.yml --branch=main --limit=10
+gh run list --workflow=publish.yml --branch=main --limit=10
 ```
 
 从列表中选取 **commit SHA 与当前 HEAD 一致** 且 **event 为 push** 的 run（若刚推送，通常为第一项）。记下 `run-id` 与 `url`。
@@ -228,7 +228,8 @@ gh run watch <run-id> --exit-status
 | Job | 含义 | 本地对照 |
 |-----|------|----------|
 | `readme` | README 译文 lock | `npm run check:readme-translations` |
-| `test` | 跨平台 Node 集成测试（ubuntu / macOS / Windows） | `npm test` |
+| `test` | 跨平台 Node 集成测试（ubuntu / macOS / Windows） | `npm test`（job 内先 `npm ci`） |
+| `publish` | **`main` push 专用**：发布 `package.json` 版本到 npm | 本地不可完全复现（需 `NPM_TOKEN`）；发布前须已 bump 版本 |
 
 #### 5b.3 CI 失败：诊断
 
