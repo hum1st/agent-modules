@@ -1,0 +1,25 @@
+---
+description: 仓库内源码注释、Cursor 规则与 Skill 使用简体中文；面向用户的 README 以英文为入口
+alwaysApply: true
+---
+
+# 简体中文维护规范
+
+Agent Bay 面向国际用户，**根目录 `README.md` 为英文入口**；翻译版仅放在 `docs/README.<locale>.md`。
+
+## Agent 行为
+
+- 与本仓库相关的 **源码注释**、**`.cursor/rules`**、**`.cursor/skills`**、配置与脚本内的 **维护者向说明**，一律使用 **简体中文**。
+- **根目录 `README.md` 保持英文**；编辑各语言 README 时，单文件内不混用语言。
+- 语言切换器中的链接标签可使用原生文字（如「简体中文」）；切换器周围的维护说明可用英文（根 README）或对应 locale（`docs/` 内文件）。
+- 提交说明、PR 与 Issue 草稿：若无特别要求，可使用 **英文** Conventional Commits（与 `release` skill 一致），便于与 Git 生态工具兼容。
+
+## 面向用户的文档
+
+- 翻译 README 仅位于 `docs/README.<locale>.md`。
+- 编辑 locale 文件时保留目标语言，不要在同一 locale 文件内混用多种语言。
+
+## 例外
+
+- 专有名词、协议名、CLI 命令与规范 URL 保持原文。
+- 若用户在对话中明确要求使用其他语言，仅该次对话遵循；除非用户另有说明，仓库文件仍按上述约定。
