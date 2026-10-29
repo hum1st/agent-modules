@@ -14,6 +14,8 @@
   <a href="README.ur.md">اردو</a>
 </p>
 
+# Agent Bay
+
 **Módulos de capacidade plugáveis para agentes de codificação** — adicione, atualize e expanda skills e regras a partir do Git no Cursor, Claude Code, Codex, GitHub Copilot e outros agentes.
 
 ---
@@ -47,6 +49,14 @@ Issues e PRs são bem-vindos sobre formatos de módulo e semântica de sincroniz
 
 ---
 
+## Documentação e convenções
+
+- **Inglês** é a entrada padrão: [`README.md`](../README.md). Outros idiomas estão neste diretório como `README.<locale>.md` (veja o seletor no topo).
+- Artefatos **para mantenedores** — comentários no código, `.cursor/rules`, `.cursor/skills` — são escritos em **chinês simplificado** (简体中文), salvo documentação de usuário em outro locale.
+- **Versionamento** segue SemVer em [`package.json`](../package.json) (a partir de `1.0.0`); tags Git usam o prefixo `v`. Regras de bump estão no skill `release`.
+
+---
+
 ## Links
 
 - [Especificação Agent Skills](https://agentskills.io)
@@ -57,3 +67,5 @@ Issues e PRs são bem-vindos sobre formatos de módulo e semântica de sincroniz
 ## Licença
 
 [MIT](../LICENSE)
+
+<!-- agent-bay-readme-locale:pt via readme-translations-write -->

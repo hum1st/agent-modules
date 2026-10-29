@@ -14,6 +14,8 @@
   <a href="README.ur.md">اردو</a>
 </p>
 
+# Agent Bay
+
 <p dir="rtl">
 
 <strong>کوڈنگ ایجنٹس کے لیے پلگ‑ان صلاحیت ماڈیول</strong> — Git سے skills اور rules شامل، اپ گریڈ اور پھیلائیں؛ Cursor، Claude Code، Codex، GitHub Copilot وغیرہ میں۔
@@ -65,6 +67,18 @@ Agent Bay <strong>ویب crawler نہیں</strong> اور عوامی skill regis
 
 <p dir="rtl">
 
+## دستاویزات اور conventions
+
+- **انگریزی** ڈیفالٹ انٹری: <a href="../README.md">README.md</a>۔ دیگر زبانیں اس ڈائریکٹری میں <code>README.&lt;locale&gt;.md</code> (اوپر language switcher)۔
+- **Maintainer** artifacts — source comments، <code>.cursor/rules</code>، <code>.cursor/skills</code> — **آسان چینی** (简体中文) میں، سوائے صارف locale docs کے۔
+- **ورژن** <a href="../package.json">package.json</a> میں SemVer (<code>1.0.0</code> سے)؛ Git tags <code>v</code> prefix۔ Release bump rules <code>release</code> skill میں۔
+
+</p>
+
+---
+
+<p dir="rtl">
+
 ## لنکس
 
 - <a href="https://agentskills.io">Agent Skills specification</a>
@@ -81,3 +95,5 @@ Agent Bay <strong>ویب crawler نہیں</strong> اور عوامی skill regis
 <a href="../LICENSE">MIT</a>
 
 </p>
+
+<!-- agent-bay-readme-locale:ur via readme-translations-write -->

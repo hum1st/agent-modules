@@ -14,6 +14,8 @@
   <a href="README.ur.md">اردو</a>
 </p>
 
+# Agent Bay
+
 **कोडिंग एजेंटों के लिए प्लग‑इन क्षमता मॉड्यूल** — Git से स्किल और नियम जोड़ें, अपग्रेड करें और विस्तारित करें; Cursor, Claude Code, Codex, GitHub Copilot आदि में।
 
 ---
@@ -47,6 +49,14 @@ Agent Bay **वेब क्रॉलर नहीं** है और सार�
 
 ---
 
+## दस्तावेज़ और सम्मेलन
+
+- **अंग्रेज़ी** डिफ़ॉल्ट प्रवेश: [`README.md`](../README.md)। अन्य भाषाएँ इस निर्देशिका में `README.<locale>.md` (शीर्ष पर भाषा स्विचer)।
+- **रख-रखाव** कलाकृतियाँ — स्रोत टिप्पणियाँ, `.cursor/rules`, `.cursor/skills` — **सरलीकृत चीनी** (简体中文) में, जब तक फ़ाइल किसी locale की उपयोगकर्ता दस्तावेज़ न हो।
+- **संस्करण** [`package.json`](../package.json) में SemVer (`1.0.0` से); Git टैग `v` उपसर्ग। Release bump नियम `release` skill में।
+
+---
+
 ## लिंक
 
 - [Agent Skills specification](https://agentskills.io)
@@ -57,3 +67,5 @@ Agent Bay **वेब क्रॉलर नहीं** है और सार�
 ## लाइसेंस
 
 [MIT](../LICENSE)
+
+<!-- agent-bay-readme-locale:hi via readme-translations-write -->

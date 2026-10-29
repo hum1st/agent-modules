@@ -14,6 +14,8 @@
   <a href="README.ur.md">اردو</a>
 </p>
 
+# Agent Bay
+
 **面向 coding agent 的可插拔能力模块** — 从 Git 添加、升级并扩展技能与规则，覆盖 Cursor、Claude Code、Codex、GitHub Copilot 等多种 AI 编程工具。
 
 ---
@@ -49,6 +51,8 @@ Agent Bay **不是** 网页爬虫，也 **不替代** 公共 skill 目录（如 
 
 - **英文** 为默认入口：[`README.md`](../README.md)。其他语言见本目录 `README.<locale>.md`（文首语言切换器）。
 - 仓库内 **维护者向** 内容 — 源码注释、`.cursor/rules`、`.cursor/skills` — 使用 **简体中文**，除非文件本身为某 locale 的面向用户文档（如本文件）。
+- **版本号** 以根目录 [`package.json`](../package.json) 的 SemVer 为准（自 `1.0.0` 起）；Git tag 为 `v` 前缀。发布时的 patch/minor 规则见 `release` skill。
+- **译文同步**：**禁止手改** 本目录 `README.<locale>.md`。英文 [`README.md`](../README.md) 变更后运行 **`npm run docs:readme-translate`**（翻译接口写入并自动更新 [`README.lock.json`](./README.lock.json)）。husky 与 [GitHub Actions CI](../.github/workflows/ci.yml) 执行 `npm run check:readme-translations`。
 
 ---
 
@@ -62,3 +66,5 @@ Agent Bay **不是** 网页爬虫，也 **不替代** 公共 skill 目录（如 
 ## 许可证
 
 [MIT](../LICENSE)
+
+<!-- agent-bay-readme-locale:zh-CN via readme-translations-write -->

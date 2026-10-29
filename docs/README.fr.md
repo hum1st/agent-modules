@@ -1,7 +1,7 @@
 # Agent Bay
 
 <p align="center">
-  <strong>Lire dans d’autres langues</strong><br>
+  <strong>Lire dans d'autres langues</strong><br>
   <a href="../README.md">English</a> ·
   <a href="README.zh-CN.md">简体中文</a> ·
   <a href="README.hi.md">हिन्दी</a> ·
@@ -13,6 +13,8 @@
   <a href="README.ru.md">Русский</a> ·
   <a href="README.ur.md">اردو</a>
 </p>
+
+# Agent Bay
 
 **Modules de capacités branchables pour agents de codage** — ajoutez, mettez à jour et étendez skills et règles depuis Git pour Cursor, Claude Code, Codex, GitHub Copilot et d’autres agents.
 
@@ -47,6 +49,14 @@ Issues et PR bienvenues sur les formats de modules et la sémantique de synchron
 
 ---
 
+## Documentation et conventions
+
+- **Anglais** : entrée par défaut [`README.md`](../README.md). Les autres langues sont ici en `README.<locale>.md` (sélecteur en tête de page).
+- Artefacts **mainteneurs** — commentaires, `.cursor/rules`, `.cursor/skills` — en **chinois simplifié** (简体中文), sauf docs utilisateur dans la locale concernée.
+- **Versions** : SemVer dans [`package.json`](../package.json) (à partir de `1.0.0`) ; tags Git préfixés `v`. Règles de bump dans le skill `release`.
+
+---
+
 ## Liens
 
 - [Spécification Agent Skills](https://agentskills.io)
@@ -57,3 +67,5 @@ Issues et PR bienvenues sur les formats de modules et la sémantique de synchron
 ## Licence
 
 [MIT](../LICENSE)
+
+<!-- agent-bay-readme-locale:fr via readme-translations-write -->

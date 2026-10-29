@@ -49,6 +49,8 @@ Issues and PRs welcome for module formats and sync semantics.
 
 - **English** is the default entry: this file (`README.md`). Other languages live under [`docs/`](./docs/) as `README.<locale>.md` (see the language switcher at the top).
 - **Maintainer-facing** artifacts in the repo — source comments, `.cursor/rules`, and `.cursor/skills` — are written in **Simplified Chinese** (简体中文), unless a file’s locale is explicitly something else (e.g. translated end-user READMEs).
+- **Versioning** follows SemVer in [`package.json`](./package.json) (from `1.0.0`); Git tags use the `v` prefix (e.g. `v1.0.0`). Release bumps are described in the `release` skill.
+- **Translated READMEs** must stay in sync with this file. **Do not edit** `docs/README.<locale>.md` by hand — use **`npm run docs:readme-translate`** (translation API + write pipeline; updates [`docs/README.lock.json`](./docs/README.lock.json) when all locales align). Husky and [GitHub Actions CI](./.github/workflows/ci.yml) run `npm run check:readme-translations`.
 
 ---
 

@@ -14,6 +14,8 @@
   <a href="README.ur.md">اردو</a>
 </p>
 
+# Agent Bay
+
 <p dir="rtl">
 
 <strong>وحدات قدرات قابلة للتركيب لوكلاء البرمجة</strong> — أضِف وحدّث ووسّع المهارات والقواعد من Git عبر Cursor وClaude Code وCodex وGitHub Copilot وغيرها.
@@ -65,6 +67,18 @@ Issues وPR مرحب بها حول صيغ الوحدات ودلالات المز
 
 <p dir="rtl">
 
+## التوثيق والاتفاقيات
+
+- **الإنجليزية** هي المدخل الافتراضي: <a href="../README.md">README.md</a>. اللغات الأخرى في هذا المجلد كـ <code>README.&lt;locale&gt;.md</code> (مبدّل اللغة أعلى الصفحة).
+- محتوى **للم maintainers** — تعليقات الكود، <code>.cursor/rules</code>، <code>.cursor/skills</code> — ب<strong>الصينية المبسّطة</strong> (简体中文) ما لم يكن الملف توثيق مستخدم بلغة أخرى.
+- **الإصدارات** SemVer في <a href="../package.json">package.json</a> (من <code>1.0.0</code>)؛ وسوم Git ببادئة <code>v</code>. قواعد bump في skill <code>release</code>.
+
+</p>
+
+---
+
+<p dir="rtl">
+
 ## روابط
 
 - <a href="https://agentskills.io">مواصفة Agent Skills</a>
@@ -81,3 +95,5 @@ Issues وPR مرحب بها حول صيغ الوحدات ودلالات المز
 <a href="../LICENSE">MIT</a>
 
 </p>
+
+<!-- agent-bay-readme-locale:ar via readme-translations-write -->

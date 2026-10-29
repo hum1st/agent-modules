@@ -7,11 +7,14 @@
   <a href="README.hi.md">हिन्दी</a> ·
   <a href="README.es.md">Español</a> ·
   <a href="README.fr.md">Français</a> ·
-  <a href="README.ru.md">Русский</a> ·
-  <a href="README.pt.md">Português</a> ·
+  <a href="README.ar.md">العربية</a> ·
   <a href="README.bn.md">বাংলা</a> ·
+  <a href="README.pt.md">Português</a> ·
+  <a href="README.ru.md">Русский</a> ·
   <a href="README.ur.md">اردو</a>
 </p>
+
+# Agent Bay
 
 **Подключаемые модули возможностей для coding‑агентов** — добавляйте, обновляйте и расширяйте skills и rules из Git для Cursor, Claude Code, Codex, GitHub Copilot и других агентов.
 
@@ -46,6 +49,14 @@ Issue и PR приветствуются по форматам модулей и
 
 ---
 
+## Документация и соглашения
+
+- **Английский** — вход по умолчанию: [`README.md`](../README.md). Другие языки — в этом каталоге как `README.<locale>.md` (переключатель вверху).
+- **Для сопровождения** — комментарии в коде, `.cursor/rules`, `.cursor/skills` — на **упрощённом китайском** (简体中文), кроме пользовательских docs на нужной locale.
+- **Версии** — SemVer в [`package.json`](../package.json) (с `1.0.0`); Git-теги с префиксом `v`. Правила bump — в skill `release`.
+
+---
+
 ## Ссылки
 
 - [Спецификация Agent Skills](https://agentskills.io)
@@ -56,3 +67,5 @@ Issue и PR приветствуются по форматам модулей и
 ## Лицензия
 
 [MIT](../LICENSE)
+
+<!-- agent-bay-readme-locale:ru via readme-translations-write -->

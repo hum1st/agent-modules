@@ -1,0 +1,24 @@
+{
+  "name": "agent-bay",
+  "version": "1.0.0",
+  "description": "Pluggable capability modules for coding agents",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hum1st/agent-bay.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hum1st/agent-bay/issues"
+  },
+  "homepage": "https://github.com/hum1st/agent-bay#readme",
+  "scripts": {
+    "check:readme-translations": "node scripts/check-readme-translations.mjs",
+    "ci": "npm run check:readme-translations",
+    "docs:readme-translate": "node scripts/translate-readme.mjs",
+    "docs:readme-lock": "node scripts/save-readme-translations-lock.mjs",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}
