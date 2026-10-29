@@ -1,82 +1,63 @@
-# Agent Bay
+# Agent Modules
 
 <p align="center">
   <strong>Lire dans d'autres langues</strong><br>
-  <a href="../README.md">English</a> ·
-  <a href="README.zh-CN.md">简体中文</a> ·
-  <a href="README.hi.md">हिन्दी</a> ·
-  <a href="README.es.md">Español</a> ·
-  <a href="README.fr.md">Français</a> ·
-  <a href="README.ar.md">العربية</a> ·
-  <a href="README.bn.md">বাংলা</a> ·
-  <a href="README.pt.md">Português</a> ·
-  <a href="README.ru.md">Русский</a> ·
-  <a href="README.ur.md">اردو</a>
+  <a href="https://github.com/hum1st/agent-modules/blob/main/README.md">English</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.zh-CN.md">简体中文</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.hi.md">हिन्दी</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.es.md">Español</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.fr.md">Français</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.ar.md">العربية</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.bn.md">বাংলা</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.pt.md">Português</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.ru.md">Русский</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.ur.md">اردو</a>
 </p>
 
-# Agent Bay
+# Agent Modules
 
-**Agent Bay** — **skills** et **règles** pour les agents de codage (Cursor, Claude Code, Codex, GitHub Copilot, et autres), issus de Git.
+**Agent Modules** — **skills** et **rules** pour les coding agents (Cursor, Claude Code, Codex, GitHub Copilot, etc.), depuis Git.
 
 ---
 
 ## Installation
 
-### 1. Installer Git
+### 1. Installer Git et Node.js
 
-Installez [Git](https://git-scm.com/downloads). Sous Windows, Git inclut **Git Bash** ; vous pouvez aussi utiliser l’**Invite de commandes** avec l’enveloppe `.cmd` à l’étape 3.
+Installez [Git](https://git-scm.com/downloads) et [Node.js](https://nodejs.org/) (LTS, 18+).
 
-### 2. Cloner le dépôt
+### 2. Installer et initialiser
 
-```sh
-git clone https://github.com/hum1st/agent-bay.git ~/.agentBay
-```
-
-### 3. Synchroniser les skills
-
-Exécutez **agent-bay** pour synchroniser les skills **agent-bay\*** dans le répertoire global de skills de chaque agent installé (Cursor, Claude Code, Copilot CLI, Codex). Les copies obsolètes de `agent-bay*` sont supprimées ; les ajouts, mises à jour et suppressions dans le dépôt sont appliqués à la prochaine exécution.
-
-#### macOS, Linux et Git Bash
+Exécutez **dans l’ordre** dans le Terminal macOS, Linux, Git Bash ou PowerShell. Les lignes commençant par **`#`** sont des commentaires (vous pouvez les coller telles quelles dans un shell type Bash ; dans l’invite de commandes Windows, exécutez uniquement les lignes `npm` et `agent-modules`).
 
 ```sh
-sh ~/.agentBay/bin/agent-bay
+# Installez la CLI Agent Modules depuis le registre npm.
+npm install -g agent-modules
+
+# Configuration unique : créez ~/.agentModules et copiez les skills agent-modules* fournies
+# dans le dossier global de skills de chaque agent détecté (Cursor, Claude Code, Copilot CLI, Codex).
+agent-modules
 ```
 
-#### Windows (Invite de commandes)
+Ensuite, inutile de relancer **`agent-modules`** pour les mises à jour courantes — utilisez **`/agent-modules-sync`** dans votre agent.
 
-```cmd
-%USERPROFILE%\.agentBay\bin\agent-bay.cmd
-```
+### 3. Ajouter des dépôts de skills
 
-### 4. Tester avec votre agent
+Dans Cursor ou un autre agent pris en charge, exécutez **`/agent-modules-add`** pour vous abonner à un dépôt Git — par exemple **[agent-modules-demo](https://github.com/hum1st/agent-modules-demo)**. Choisissez la portée **global** ou **project** lorsque demandé.
 
-Dans Cursor, Claude Code ou un autre agent pris en charge, exécutez **`/agent-bay-version`**. L’agent doit indiquer la version de votre installation `~/.agentBay` (par exemple, la valeur dans `package.json`).
+Ne modifiez pas **`~/.agentModules`** à la main ; utilisez **`/agent-modules-add`** et **`/agent-modules-sync`**.
 
 ---
 
 ## Dépôt d’exemple officiel
 
-Utilisez **[agent-bay-demo](https://github.com/hum1st/agent-bay-demo)** comme disposition Git de référence pour un petit projet compatible Agent Bay.
-
-```
-skills/<skill-name>/   # Agent Skills (SKILL.md, scripts optionnels)
-rules/                 # Règles pour agents (p. ex. Cursor .mdc)
-package.json           # Dépendances optionnelles pour les outils des skills
-```
-
-**Skills** — un dossier par skill sous `skills/`, conformément à la disposition [Agent Skills](https://agentskills.io).
-
-**Règles** — directives partagées sous `rules/` pour les agents qui chargent des règles de projet ou globales en complément des skills.
-
-**Dépendances** — lorsqu’un dépôt inclut un `package.json`, exécutez **`npm install`** à la racine du dépôt après le clone (ou dans votre script de synchronisation) afin que les bibliothèques listées dans `dependencies` / `devDependencies` soient installées automatiquement avant que les skills ne les utilisent.
-
-Clonez la démo, installez les dépendances si `package.json` est présent, branchez `skills/` dans votre agent et invoquez le skill de démo pour vérifier le chargement de bout en bout.
+**[agent-modules-demo](https://github.com/hum1st/agent-modules-demo)** montre une petite disposition pour un dépôt de dépendances (`skills/`, `rules/` optionnel). Abonnez-vous avec **`/agent-modules-add`**, puis exécutez **`/agent-modules-sync`**.
 
 ---
 
 ## Liens
 
-- [Agent Bay demo (dépôt d’exemple officiel)](https://github.com/hum1st/agent-bay-demo)
+- [Agent Modules demo (dépôt d’exemple officiel)](https://github.com/hum1st/agent-modules-demo)
 - [Spécification Agent Skills](https://agentskills.io)
 - [Exemples de skills Anthropic](https://github.com/anthropics/skills)
 
@@ -84,6 +65,6 @@ Clonez la démo, installez les dépendances si `package.json` est présent, bran
 
 ## Licence
 
-[MIT](./LICENSE)
+[MIT](https://github.com/hum1st/agent-modules/blob/main/LICENSE)
 
-<!-- agent-bay-readme-locale:fr via readme-translations-write -->
+<!-- agent-modules-readme-locale:fr via readme-translations-write -->

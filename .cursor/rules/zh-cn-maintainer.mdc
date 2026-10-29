@@ -5,7 +5,7 @@ alwaysApply: true
 
 # 简体中文维护规范
 
-Agent Bay 面向国际用户，**根目录 `README.md` 为英文入口**；翻译版仅放在 `docs/README.<locale>.md`。
+Agent Modules 面向国际用户，**根目录 `README.md` 为英文入口**；翻译版仅放在 `docs/README.<locale>.md`。
 
 ## Agent 行为
 

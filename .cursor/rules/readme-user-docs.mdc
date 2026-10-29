@@ -12,7 +12,7 @@ alwaysApply: false
 
 - **已交付能力**：仓库里**已经存在**、用户现在就能用的功能（命令、脚本、skill 入口、安装步骤）。一条对应一件实事。
 - **使用**：与上述能力对应的最少步骤（如 Git、clone 路径、已提供的脚本或 skill 名称）。
-- **链接与许可证**：外部规范、示例、MIT。
+- **链接与许可证**：外部规范、示例、MIT。语言切换器与各 locale 的 **MIT** 链接须使用 **GitHub 绝对 URL**（`https://github.com/hum1st/agent-modules/blob/main/...`），以便在 npm 包页面可打开；勿用 `./LICENSE` 或 `docs/` 相对路径。
 - 文首 **语言切换器**（多语言 README）若已提供，保留即可。
 
 未实现或未合并的能力**不要**写进 README（包括 tagline 里也不要承诺尚未存在的 sync/upgrade 等，除非代码已落地）。

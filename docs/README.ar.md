@@ -1,89 +1,70 @@
-# Agent Bay
+# Agent Modules
 
 <p align="center">
   <strong>اقرأ بلغات أخرى</strong><br>
-  <a href="../README.md">English</a> ·
-  <a href="README.zh-CN.md">简体中文</a> ·
-  <a href="README.hi.md">हिन्दी</a> ·
-  <a href="README.es.md">Español</a> ·
-  <a href="README.fr.md">Français</a> ·
-  <a href="README.ar.md">العربية</a> ·
-  <a href="README.bn.md">বাংলা</a> ·
-  <a href="README.pt.md">Português</a> ·
-  <a href="README.ru.md">Русский</a> ·
-  <a href="README.ur.md">اردو</a>
+  <a href="https://github.com/hum1st/agent-modules/blob/main/README.md">English</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.zh-CN.md">简体中文</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.hi.md">हिन्दी</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.es.md">Español</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.fr.md">Français</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.ar.md">العربية</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.bn.md">বাংলা</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.pt.md">Português</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.ru.md">Русский</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.ur.md">اردو</a>
 </p>
 
-# Agent Bay
+# Agent Modules
 
-<p dir="rtl">**Agent Bay** — **skills** و**rules** لوكلاء البرمجة (Cursor وClaude Code وCodex وGitHub Copilot وغيرها)، مُستقاة من Git.</p>
+**Agent Modules** — **skills** و **rules** لوكلاء البرمجة (Cursor وClaude Code وCodex وGitHub Copilot وغيرها)، من Git.
 
 ---
 
-## Installation
+## التثبيت
 
-### 1. Install Git
+### 1. تثبيت Git وNode.js
 
-<p dir="rtl">ثبّت [Git](https://git-scm.com/downloads). على Windows، يتضمّن Git **Git Bash**؛ يمكنك أيضًا استخدام **موجه الأوامر** (Command Prompt) مع ملف `.cmd` في الخطوة 3.</p>
+ثبّت [Git](https://git-scm.com/downloads) و[Node.js](https://nodejs.org/) (LTS، 18+).
 
-### 2. Clone the repository
+### 2. التثبيت والتهيئة
+
+نفّذ التالي **بالترتيب** في Terminal على macOS أو Linux أو Git Bash أو PowerShell. الأسطر التي تبدأ بـ **`#`** تعليقات (يمكن لصقها كما هي في shells شبيهة بـ Bash؛ في موجه الأوامر نفّذ أسطر `npm` و`agent-modules` فقط).
 
 ```sh
-git clone https://github.com/hum1st/agent-bay.git ~/.agentBay
+# ثبّت CLI الخاص بـ Agent Modules من سجل npm.
+npm install -g agent-modules
+
+# إعداد لمرة واحدة: أنشئ ~/.agentModules وانسخ skills المضمّنة agent-modules*
+# إلى مجلد skills العام لكل agent مُكتشَف (Cursor، Claude Code، Copilot CLI، Codex).
+agent-modules
 ```
 
-### 3. Sync skills
+بعد ذلك لا حاجة لتشغيل **`agent-modules`** مجددًا للتحديثات اليومية — استخدم **`/agent-modules-sync`** في الـ agent.
 
-<p dir="rtl">شغّل **agent-bay** لمزامنة skills التي تبدأ بـ **agent-bay\*** إلى دليل skills العام لكل وكيل مثبّت (Cursor وClaude Code وCopilot CLI وCodex). تُزال نسخ `agent-bay*` القديمة؛ وتُطبَّق الإضافات والتحديثات والحذف في المستودع في التشغيل التالي.</p>
+### 3. إضافة مستودعات skills
 
-#### macOS, Linux, and Git Bash
+في Cursor أو agent مدعوم آخر، نفّذ **`/agent-modules-add`** للاشتراك في مستودع Git — مثل **[agent-modules-demo](https://github.com/hum1st/agent-modules-demo)**. اختر نطاق **global** أو **project** عند المطالبة.
 
-```sh
-sh ~/.agentBay/bin/agent-bay
-```
-
-#### Windows (Command Prompt)
-
-```cmd
-%USERPROFILE%\.agentBay\bin\agent-bay.cmd
-```
-
-### 4. Test with your agent
-
-<p dir="rtl">في Cursor أو Claude Code أو وكيل مدعوم آخر، نفّذ **`/agent-bay-version`**. يجب أن يُبلغ الوكيل عن الإصدار من تثبيت `~/.agentBay` لديك (مثلًا القيمة في `package.json`).</p>
+لا تعدّل **`~/.agentModules`** يدويًا؛ استخدم **`/agent-modules-add`** و**`/agent-modules-sync`**.
 
 ---
 
-## Official example repository
+## مستودع المثال الرسمي
 
-<p dir="rtl">استخدم **[agent-bay-demo](https://github.com/hum1st/agent-bay-demo)** كمرجع لتخطيط Git لمشروع صغير متوافق مع Agent Bay.</p>
-
-```
-skills/<skill-name>/   # Agent Skills (SKILL.md, optional scripts)
-rules/                 # Agent rules (e.g. Cursor .mdc)
-package.json           # Optional dependencies for skill tooling
-```
-
-<p dir="rtl">**Skills** — مجلد واحد لكل skill تحت `skills/`، وفق تخطيط [Agent Skills](https://agentskills.io).</p>
-
-<p dir="rtl">**Rules** — إرشادات مشتركة تحت `rules/` للوكلاء الذين يحمّلون قواعد المشروع أو العامة إلى جانب skills.</p>
-
-<p dir="rtl">**Dependencies** — عندما يتضمّن المستودع `package.json`، نفّذ **`npm install`** في جذر المستودع بعد الاستنساخ (أو كجزء من سكript المزامنة) حتى تُثبَّت تلقائيًا المكتبات المدرجة في `dependencies` / `devDependencies` قبل أن تستخدمها skills.</p>
-
-<p dir="rtl">استنسخ المثال، ثبّت الاعتماديات إن وُجد `package.json`، واربط `skills/` بوكيلك، واستدعِ skill المثال للتحقق من التحميل من البداية إلى النهاية.</p>
+**[agent-modules-demo](https://github.com/hum1st/agent-modules-demo)** يعرض تخطيطًا صغيرًا لمستودع تبعية (`skills/`، و`rules/` اختياري). اشترك عبر **`/agent-modules-add`** ثم نفّذ **`/agent-modules-sync`**.
 
 ---
 
-## Links
+## روابط
 
-- [Agent Bay demo (official example repository)](https://github.com/hum1st/agent-bay-demo)
+- [Agent Modules demo (official example repository)](https://github.com/hum1st/agent-modules-demo)
 - [Agent Skills specification](https://agentskills.io)
 - [Anthropic example skills](https://github.com/anthropics/skills)
 
 ---
 
-## License
+## الترخيص
 
-[MIT](./LICENSE)
+[MIT](https://github.com/hum1st/agent-modules/blob/main/LICENSE)
 
-<!-- agent-bay-readme-locale:ar via readme-translations-write -->
+<!-- agent-modules-readme-locale:ar via readme-translations-write -->

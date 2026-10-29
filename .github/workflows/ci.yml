@@ -43,7 +43,6 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Integration tests (agent-bay shell)
+      - name: Integration tests (agent-modules CLI)
         run: npm test
         env:
-          AGENTBAY_TEST_SH: ${{ runner.os == 'Windows' && 'C:\Program Files\Git\bin\sh.exe' || 'sh' }}

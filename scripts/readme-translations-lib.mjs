@@ -5,10 +5,10 @@ import { fileURLToPath } from "node:url";
 
 /** 仅允许通过 readme-translations-write 写入的 provenance 标记。 */
 export const WRITE_PROVENANCE_MARKER =
-  /<!-- agent-bay-readme-locale:[\w-]+ via readme-translations-write -->/;
+  /<!-- agent-modules-readme-locale:[\w-]+ via readme-translations-write -->/;
 
 export function writeProvenanceComment(locale) {
-  return `<!-- agent-bay-readme-locale:${locale} via readme-translations-write -->`;
+  return `<!-- agent-modules-readme-locale:${locale} via readme-translations-write -->`;
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -17,6 +17,15 @@ export const REPO_ROOT = join(__dirname, "..");
 export const SOURCE_README = join(REPO_ROOT, "README.md");
 export const LOCK_PATH = join(REPO_ROOT, "docs", "README.lock.json");
 export const DOCS_DIR = join(REPO_ROOT, "docs");
+
+/** npm 包内相对链接无效；语言切换与 LICENSE 使用 GitHub 绝对 URL。 */
+export const GITHUB_BLOB_BASE = "https://github.com/hum1st/agent-modules/blob/main";
+
+export function githubBlobUrl(repoRelativePath) {
+  return `${GITHUB_BLOB_BASE}/${repoRelativePath}`;
+}
+
+export const LICENSE_URL = githubBlobUrl("LICENSE");
 
 /** 与仓库内 docs/README.<locale>.md 一致；新增语言时扩展此列表并补译文。 */
 export const LOCALES = [
@@ -50,9 +59,10 @@ export function buildDocsLanguageSwitcher(activeLocale) {
     throw new Error(`未知 locale: ${activeLocale}`);
   }
   const links = [
-    `<a href="../README.md">English</a>`,
+    `<a href="${githubBlobUrl("README.md")}">English</a>`,
     ...LOCALES.map(
-      (loc) => `<a href="README.${loc}.md">${LOCALE_META[loc].label}</a>`,
+      (loc) =>
+        `<a href="${githubBlobUrl(`docs/README.${loc}.md`)}">${LOCALE_META[loc].label}</a>`,
     ),
   ];
   return [
@@ -68,7 +78,7 @@ export function assembleLocaleReadme(locale, bodyMarkdown) {
   const body = normalizeForHash(bodyMarkdown);
   const switcher = buildDocsLanguageSwitcher(locale);
   const marker = writeProvenanceComment(locale);
-  return `# Agent Bay\n\n${switcher}\n\n${body}\n\n${marker}\n`;
+  return `# Agent Modules\n\n${switcher}\n\n${body}\n\n${marker}\n`;
 }
 
 export function extractTranslatableBodyFromSource() {

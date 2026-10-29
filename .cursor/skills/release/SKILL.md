@@ -1,14 +1,14 @@
 ---
 name: release
 description: >-
-  发布 Agent Bay：审查变更、在 main 上以固定作者信息提交、推送，可选创建 GitHub Release。
+  发布 Agent Modules：审查变更、在 main 上以固定作者信息提交、推送，可选创建 GitHub Release。
   在用户调用 /release 或要求发布本仓库时使用。步骤报告使用简体中文。
 disable-model-invocation: true
 ---
 
-# release — 提交并发布 Agent Bay
+# release — 提交并发布 Agent Modules
 
-本 skill 适用于 **agent-bay** 仓库（`/release`）。**没有** `npm run sync`；流程为 **提交 →（发布时）版本号与 tag → 推送 → GitHub Release → 监听 CI →（失败则修复并重发）**。
+本 skill 适用于 **agent-modules** 仓库（`/release`）。**没有** `npm run sync`；流程为 **提交 →（发布时）版本号与 tag → 推送 → GitHub Release → 监听 CI →（失败则修复并重发）**。
 
 仓库 **SemVer** 以根目录 **`package.json` 的 `version`** 为准，**从 `1.0.0` 起**；Git tag 为 **`v` + 该版本**（例如 `v1.0.0`）。
 
@@ -48,7 +48,7 @@ disable-model-invocation: true
 ### 提交命令模板（优先 **`git commit-tree`**；单行 subject，无 body/trailer）
 
 ```bash
-cd /path/to/agent-bay
+cd /path/to/agent-modules
 git add <paths>
 TREE=$(git write-tree)
 NEW=$(GIT_AUTHOR_NAME='Dennis Chen' GIT_AUTHOR_EMAIL='dennis@lycoo.com' \
@@ -106,10 +106,10 @@ node scripts/readme-translations-status.mjs --print-source-body
 **Subagent 任务模板**（将 `<locale>`、`<locale-label>` 替换为实际值；`<source-body>` 为上一步英文正文）：
 
 ```text
-Full Repository Path: <本仓库绝对路径，即 agent-bay 根目录>
+Full Repository Path: <本仓库绝对路径，即 agent-modules 根目录>
 Change Description: Translate the English README body to <locale> (<locale-label>).
 Custom Instructions:
-- Input is markdown body only (no # Agent Bay H1, no language switcher).
+- Input is markdown body only (no # Agent Modules H1, no language switcher).
 - Preserve heading levels exactly (same count and ## / ### depth as source); translate heading text naturally.
 - Preserve markdown links, code spans, and table structure.
 - Output ONLY the translated body markdown — no fences, no preamble.
@@ -121,10 +121,10 @@ Locale 参考：`zh-CN` 简体中文，`hi` हिन्दी，`es` Español�
 
 #### 1b.3 落盘（主 Agent 执行）
 
-每个 subagent 返回的正文写入临时文件（如 `/tmp/agent-bay-readme-<locale>.md`），再 **逐 locale** 调用：
+每个 subagent 返回的正文写入临时文件（如 `/tmp/agent-modules-readme-<locale>.md`），再 **逐 locale** 调用：
 
 ```bash
-node scripts/readme-translations-apply.mjs --locale <locale> --body-file /tmp/agent-bay-readme-<locale>.md
+node scripts/readme-translations-apply.mjs --locale <locale> --body-file /tmp/agent-modules-readme-<locale>.md
 ```
 
 **不要** 跳过 apply 脚本直接写 `docs/`。最后一个 locale 成功且结构一致时，脚本会打印 **`docs/README.lock.json 已更新`**。
@@ -228,7 +228,7 @@ gh run watch <run-id> --exit-status
 | Job | 含义 | 本地对照 |
 |-----|------|----------|
 | `readme` | README 译文 lock | `npm run check:readme-translations` |
-| `test` | 跨平台 shell 集成测试（ubuntu / macOS / Windows） | `npm test`（Windows 问题在 Git Bash / `AGENTBAY_TEST_SH` 下排查） |
+| `test` | 跨平台 Node 集成测试（ubuntu / macOS / Windows） | `npm test` |
 
 #### 5b.3 CI 失败：诊断
 

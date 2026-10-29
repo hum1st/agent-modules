@@ -7,7 +7,7 @@
  * - README_TRANSLATE_MODEL（默认 gpt-4o-mini）
  */
 
-import { LOCALE_META } from "./readme-translations-lib.mjs";
+import { LICENSE_URL, LOCALE_META } from "./readme-translations-lib.mjs";
 
 const DEFAULT_API_URL = "https://api.openai.com/v1/chat/completions";
 const DEFAULT_MODEL = "gpt-4o-mini";
@@ -42,9 +42,10 @@ export async function translateReadmeBody(sourceBody, locale) {
   const system = `You are a technical translator. Translate GitHub README markdown from English to ${meta.label} (${locale}).
 Rules:
 - Preserve all markdown structure: same number and depth of headings (## / ###), lists, bold, links, code spans.
-- Do NOT translate proper nouns: Agent Bay, Agent Skills, SKILL.md, Cursor, Claude Code, Codex, GitHub Copilot, MIT, SemVer, husky, npm.
-- Rewrite relative links for files under docs/: use ../README.md for English root README, ../package.json, ../LICENSE, and README.<locale>.md for sibling locale files (no docs/ prefix).
-- Output ONLY the translated markdown body: no # Agent Bay title, no language switcher HTML, no commentary.`;
+- Do NOT translate proper nouns: Agent Modules, Agent Skills, SKILL.md, Cursor, Claude Code, Codex, GitHub Copilot, MIT, SemVer, husky, npm.
+- License link must be exactly: [MIT](${LICENSE_URL}) (GitHub absolute URL; npm package has no relative LICENSE path).
+- Do not add language-switcher HTML or relative repo file links in the body; the switcher is assembled separately with GitHub URLs.
+- Output ONLY the translated markdown body: no # Agent Modules title, no language switcher HTML, no commentary.`;
 
   const user = `Translate this README body:\n\n${sourceBody}`;
 

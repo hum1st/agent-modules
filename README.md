@@ -1,80 +1,61 @@
-# Agent Bay
+# Agent Modules
 
 <p align="center">
   <strong>Read this in other languages</strong><br>
-  <a href="README.md">English</a> ·
-  <a href="docs/README.zh-CN.md">简体中文</a> ·
-  <a href="docs/README.hi.md">हिन्दी</a> ·
-  <a href="docs/README.es.md">Español</a> ·
-  <a href="docs/README.fr.md">Français</a> ·
-  <a href="docs/README.ar.md">العربية</a> ·
-  <a href="docs/README.bn.md">বাংলা</a> ·
-  <a href="docs/README.pt.md">Português</a> ·
-  <a href="docs/README.ru.md">Русский</a> ·
-  <a href="docs/README.ur.md">اردو</a>
+  <a href="https://github.com/hum1st/agent-modules/blob/main/README.md">English</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.zh-CN.md">简体中文</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.hi.md">हिन्दी</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.es.md">Español</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.fr.md">Français</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.ar.md">العربية</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.bn.md">বাংলা</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.pt.md">Português</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.ru.md">Русский</a> ·
+  <a href="https://github.com/hum1st/agent-modules/blob/main/docs/README.ur.md">اردو</a>
 </p>
 
-**Agent Bay** — **skills** and **rules** for coding agents (Cursor, Claude Code, Codex, GitHub Copilot, and others), sourced from Git.
+**Agent Modules** — **skills** and **rules** for coding agents (Cursor, Claude Code, Codex, GitHub Copilot, and others), sourced from Git.
 
 ---
 
 ## Installation
 
-### 1. Install Git
+### 1. Install Git and Node.js
 
-Install [Git](https://git-scm.com/downloads). On Windows, Git includes **Git Bash**; you can also use **Command Prompt** with the `.cmd` wrapper in step 3.
+Install [Git](https://git-scm.com/downloads) and [Node.js](https://nodejs.org/) (LTS, 18+).
 
-### 2. Clone the repository
+### 2. Install and initialize
 
-```sh
-git clone https://github.com/hum1st/agent-bay.git ~/.agentBay
-```
-
-### 3. Sync skills
-
-Run **agent-bay** to sync **agent-bay\*** skills into each installed agent’s global skills directory (Cursor, Claude Code, Copilot CLI, Codex). Stale `agent-bay*` copies are removed; adds, updates, and deletes in the repo are applied on the next run.
-
-#### macOS, Linux, and Git Bash
+Run the following **in order** in macOS Terminal, Linux, Git Bash, or PowerShell. Lines starting with **`#`** are comments (you can paste them as-is in Bash-like shells; in Command Prompt, run only the `npm` and `agent-modules` lines).
 
 ```sh
-sh ~/.agentBay/bin/agent-bay
+# Install the Agent Modules CLI from the npm registry.
+npm install -g agent-modules
+
+# One-time setup: create ~/.agentModules and copy bundled agent-modules* skills
+# into each detected agent’s global skills folder (Cursor, Claude Code, Copilot CLI, Codex).
+agent-modules
 ```
 
-#### Windows (Command Prompt)
+After this, you do not need to run **`agent-modules`** again for day-to-day updates—use **`/agent-modules-sync`** in your agent instead.
 
-```cmd
-%USERPROFILE%\.agentBay\bin\agent-bay.cmd
-```
+### 3. Add skill repositories
 
-### 4. Test with your agent
+In Cursor or another supported agent, run **`/agent-modules-add`** to subscribe to a Git repository—for example **[agent-modules-demo](https://github.com/hum1st/agent-modules-demo)**. Choose **global** or **project** scope when prompted.
 
-In Cursor, Claude Code, or another supported agent, run **`/agent-bay-version`**. The agent should report the version from your `~/.agentBay` install (for example, the value in `package.json`).
+Do **not** edit **`~/.agentModules`** by hand; use **`/agent-modules-add`** and **`/agent-modules-sync`**.
 
 ---
 
 ## Official example repository
 
-Use **[agent-bay-demo](https://github.com/hum1st/agent-bay-demo)** as the reference Git layout for a small Agent Bay–compatible project.
-
-```
-skills/<skill-name>/   # Agent Skills (SKILL.md, optional scripts)
-rules/                 # Agent rules (e.g. Cursor .mdc)
-package.json           # Optional dependencies for skill tooling
-```
-
-**Skills** — one folder per skill under `skills/`, following the [Agent Skills](https://agentskills.io) layout.
-
-**Rules** — shared guidance under `rules/` for agents that load project or global rules alongside skills.
-
-**Dependencies** — when a repo includes `package.json`, run **`npm install`** at the repo root after clone (or as part of your sync script) so libraries listed in `dependencies` / `devDependencies` are installed automatically before skills use them.
-
-Clone the demo, install dependencies if `package.json` is present, wire `skills/` into your agent, and invoke the demo skill to verify loading end to end.
+**[agent-modules-demo](https://github.com/hum1st/agent-modules-demo)** shows a small layout for a dependency repo (`skills/`, optional `rules/`). Subscribe with **`/agent-modules-add`**, then run **`/agent-modules-sync`**.
 
 ---
 
 ## Links
 
-- [Agent Bay demo (official example repository)](https://github.com/hum1st/agent-bay-demo)
+- [Agent Modules demo (official example repository)](https://github.com/hum1st/agent-modules-demo)
 - [Agent Skills specification](https://agentskills.io)
 - [Anthropic example skills](https://github.com/anthropics/skills)
 
@@ -82,4 +63,4 @@ Clone the demo, install dependencies if `package.json` is present, wire `skills/
 
 ## License
 
-[MIT](./LICENSE)
+[MIT](https://github.com/hum1st/agent-modules/blob/main/LICENSE)
