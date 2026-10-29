@@ -7,9 +7,15 @@ alwaysApply: true
 
 面向**终端用户**的功能（含 Agent 通过 skill 调用的同步、安装、升级等）必须通过 **shell 脚本** 交付，并在 **macOS** 与 **Windows（Git Bash / 随 Git for Windows 提供的 POSIX 环境）** 上可运行。
 
+## 目录分工
+
+- **`src/`**：用户向 shell（子命令 **`src/<command>.sh`**、共用库 **`src/lib/`**）。
+- **`scripts/`**：仓库**内部**维护工具（如 README 翻译校验的 Node `.mjs`），**不得**作为用户或 skill 的主入口。
+- **`bin/agent-bay`**：用户统一 CLI 入口，只 dispatch 到 **`src/`** 下脚本。
+
 ## 必须
 
-- 使用 **`#!/usr/bin/env sh`**（或经评审的 POSIX `sh` 子集）；逻辑放在 `scripts/`（或后续统一的 `bin/`）下，skill 文档写清相对 **`~/.agentBay`** 的路径与调用方式。
+- 使用 **`#!/usr/bin/env sh`**（或经评审的 POSIX `sh` 子集）；skill 文档写清相对 **`~/.agentBay`** 的路径与调用方式（例：`sh ~/.agentBay/bin/agent-bay sync`）。
 - 仅依赖本机已安装的 **Git** 及 POSIX 常见内建/工具（如 `sh`、`test`、`mkdir`、`cp`、`rm`、`cd` 等）；Git 操作使用 `git` 子命令。
 - 脚本应 **幂等**、失败时 **非零退出码**、向 stderr 输出可读的英文或中文错误信息（与 skill 约定一致即可）。
 
@@ -22,7 +28,7 @@ alwaysApply: true
 ## Skill 与脚本分工
 
 - **Skill（`SKILL.md`）**：说明何时 invoke、参数含义、禁止手改 Agent 安装目录等策略。
-- **Shell 脚本**：承载全部可执行逻辑；skill 中给出的命令必须能在仅安装 Git 的机器上直接运行。
+- **Shell 脚本（`src/`）**：承载全部可执行逻辑；skill 中给出的命令必须能在仅安装 Git 的机器上直接运行。
 
 ## 例外
 

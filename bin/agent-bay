@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+# Agent Bay 统一 CLI 入口（macOS / Windows Git Bash）
+set -e
+
+_ab_bindir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+_ab_root=$(CDPATH= cd -- "$_ab_bindir/.." && pwd)
+export AGENTBAY_ROOT="$_ab_root"
+
+_ab_usage() {
+  cat <<EOF
+Usage: agent-bay <command> [args...]
+
+Commands:
+  sync    Update this clone (git pull --ff-only)
+  help    Show this message
+
+Run from Git Bash on Windows, or any POSIX sh on macOS/Linux:
+  sh ~/.agentBay/bin/agent-bay sync
+EOF
+}
+
+_ab_cmd=${1:-help}
+if [ "$_ab_cmd" = "help" ] || [ "$_ab_cmd" = "--help" ] || [ "$_ab_cmd" = "-h" ]; then
+  _ab_usage
+  exit 0
+fi
+
+shift || true
+
+_ab_script="$_ab_root/src/${_ab_cmd}.sh"
+if [ ! -f "$_ab_script" ]; then
+  printf 'Unknown command: %s\n' "$_ab_cmd" >&2
+  _ab_usage >&2
+  exit 1
+fi
+
+exec sh "$_ab_script" "$@"
