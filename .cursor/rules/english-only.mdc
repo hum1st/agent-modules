@@ -1,0 +1,24 @@
+---
+description: Use English for all repository and agent work in this project
+alwaysApply: true
+---
+
+# English-only development
+
+Agent Bay is developed for an international audience. **Use English by default** everywhere in this repo unless the task is explicitly to translate end-user docs.
+
+## Agent behavior
+
+- Write chat replies, plans, commit messages, PR text, and issue drafts in **English**.
+- Write and edit project artifacts in **English**: source code, comments, `.cursor/` rules and skills, configs, scripts, and root `README.md`.
+
+## Localized end-user documentation
+
+- Translated READMEs live only under `docs/README.<locale>.md`.
+- When editing those files, preserve the target locale; do not mix languages inside a single locale file.
+- Link labels in the language switcher may use native script (e.g. 简体中文); surrounding maintainer-facing text stays English.
+
+## Exceptions
+
+- Proper nouns, protocol names, CLI commands, and spec URLs stay as-is.
+- If the user explicitly asks for another language in chat, follow that request for the conversation only; still keep repo commits and file content in English unless they ask otherwise.
