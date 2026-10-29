@@ -4,34 +4,36 @@ set -e
 
 _ab_bindir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 _ab_root=$(CDPATH= cd -- "$_ab_bindir/.." && pwd)
-export AGENTBAY_ROOT="$_ab_root"
+if [ -z "${AGENTBAY_ROOT:-}" ]; then
+  export AGENTBAY_ROOT="$_ab_root"
+fi
 
 _ab_usage() {
   cat <<EOF
-Usage: agent-bay <command> [args...]
+Usage: agent-bay [command]
 
 Commands:
-  sync    Update this clone (git pull --ff-only)
+  sync    Sync agent-bay* skills from this repo to agent global skill dirs (default)
   help    Show this message
 
-Run from Git Bash on Windows, or any POSIX sh on macOS/Linux:
-  sh ~/.agentBay/bin/agent-bay sync
+macOS / Linux / Windows (Git Bash):
+  sh ~/.agentBay/bin/agent-bay
+
+Windows (Command Prompt):
+  %USERPROFILE%\\.agentBay\\bin\\agent-bay.cmd
 EOF
 }
 
-_ab_cmd=${1:-help}
+_ab_cmd=${1:-sync}
 if [ "$_ab_cmd" = "help" ] || [ "$_ab_cmd" = "--help" ] || [ "$_ab_cmd" = "-h" ]; then
   _ab_usage
   exit 0
 fi
 
-shift || true
-
-_ab_script="$_ab_root/src/${_ab_cmd}.sh"
-if [ ! -f "$_ab_script" ]; then
+if [ "$_ab_cmd" != "sync" ]; then
   printf 'Unknown command: %s\n' "$_ab_cmd" >&2
   _ab_usage >&2
   exit 1
 fi
 
-exec sh "$_ab_script" "$@"
+exec sh "$_ab_root/src/sync.sh"

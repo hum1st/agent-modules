@@ -1,8 +1,8 @@
 {
   "lockVersion": 1,
   "sourcePath": "README.md",
-  "sourceHash": "67ebd385ecf596d2cf5abb42745771ab943383ad5089f38ee8ca101389cfd9de",
-  "headingSignature": "2,2,2",
+  "sourceHash": "1bbbf3e1b94e82ce70136030d60b01db969970eb442ae4ce4cc54f725921b1a7",
+  "headingSignature": "2,3,3,3,3,2,2,2",
   "locales": {
     "zh-CN": "docs/README.zh-CN.md",
     "hi": "docs/README.hi.md",
@@ -14,5 +14,5 @@
     "ru": "docs/README.ru.md",
     "ur": "docs/README.ur.md"
   },
-  "updatedAt": "2026-10-29T05:20:43.322Z"
+  "updatedAt": "2026-10-29T05:41:19.160Z"
 }

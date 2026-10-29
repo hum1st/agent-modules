@@ -13,6 +13,7 @@
   "homepage": "https://github.com/hum1st/agent-bay#readme",
   "scripts": {
     "check:readme-translations": "node scripts/check-readme-translations.mjs",
+    "test": "node scripts/test-agent-bay.mjs",
     "prepare": "husky"
   },
   "devDependencies": {

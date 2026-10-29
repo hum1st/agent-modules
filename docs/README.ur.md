@@ -14,35 +14,76 @@
   <a href="README.ur.md">اردو</a>
 </p>
 
-**Agent Bay** — کوڈنگ ایجنٹس (Cursor، Claude Code، Codex، GitHub Copilot، وغیرہ) کے لیے **skills** اور **rules**، Git سے حاصل شدہ۔
+# Agent Bay
+
+**Agent Bay** — کوڈنگ ایجنٹس (Cursor، Claude Code، Codex، GitHub Copilot، وغیرہ) کے لیے **skills** اور **rules**، Git سے حاصل کیے گئے۔
 
 ---
 
-## Installation
+## تنصیب (Installation)
 
-[Git](https://git-scm.com/downloads) انسٹال کریں (Windows پر، نیچے دی گئی کمانڈز کے لیے **Git Bash** استعمال کریں)۔
+### 1. Git انسٹال کریں
+
+[Git](https://git-scm.com/downloads) انسٹال کریں۔ Windows پر Git میں **Git Bash** شامل ہوتا ہے؛ آپ مرحلہ 3 میں `.cmd` wrapper کے ساتھ **Command Prompt** بھی استعمال کر سکتے ہیں۔
+
+### 2. ریپوزٹری کلون کریں
 
 ```sh
 git clone https://github.com/hum1st/agent-bay.git ~/.agentBay
 ```
 
-اپنی مقامی کاپی اپ ڈیٹ کریں:
+### 3. skills سنک کریں
+
+**agent-bay** چلائیں تاکہ **agent-bay\*** skills ہر انسٹال شدہ ایجنٹ کی global skills ڈائریکٹری میں سنک ہوں (Cursor، Claude Code، Copilot CLI، Codex)۔ پرانی `agent-bay*` کاپیاں ہٹا دی جاتی ہیں؛ ریپو میں شامل، اپڈیٹ اور حذف اگلے رن پر لاگو ہوتے ہیں۔
+
+#### macOS، Linux، اور Git Bash
 
 ```sh
-git -C ~/.agentBay pull --ff-only
+sh ~/.agentBay/bin/agent-bay
 ```
+
+#### Windows (Command Prompt)
+
+```cmd
+%USERPROFILE%\.agentBay\bin\agent-bay.cmd
+```
+
+### 4. اپنے ایجنٹ سے ٹیسٹ کریں
+
+Cursor، Claude Code، یا کسی اور معاون ایجنٹ میں **`/agent-bay-version`** چلائیں۔ ایجنٹ کو آپ کی `~/.agentBay` تنصیب سے ورژن رپورٹ کرنا چاہیے (مثلاً `package.json` میں موجود value)۔
 
 ---
 
-## Links
+## سرکاری مثالی ریپوزٹری
 
+چھوٹے Agent Bay–موافق پروجیکٹ کے لیے Git layout کا حوالہ **[agent-bay-demo](https://github.com/hum1st/agent-bay-demo)** استعمال کریں۔
+
+```
+skills/<skill-name>/   # Agent Skills (SKILL.md، اختیاری scripts)
+rules/                 # Agent rules (مثلاً Cursor .mdc)
+package.json           # skill tooling کے لیے اختیاری dependencies
+```
+
+**Skills** — `skills/` کے تحت ہر skill کے لیے ایک فولڈر، [Agent Skills](https://agentskills.io) layout کے مطابق۔
+
+**Rules** — `rules/` کے تحت مشترکہ رہنمائی، ان ایجنٹس کے لیے جو skills کے ساتھ project یا global rules لوڈ کرتے ہیں۔
+
+**Dependencies** — جب ریپو میں `package.json` ہو، clone کے بعد (یا اپنی sync script کا حصہ بن کر) ریپo root پر **`npm install`** چلائیں تاکہ `dependencies` / `devDependencies` میں درج libraries skills کے استعمال سے پہلے خودکار طور پر انسٹال ہوں۔
+
+ڈیمو کلون کریں، اگر `package.json` موجود ہو تو dependencies انسٹال کریں، `skills/` کو اپنے ایجنٹ سے جوڑیں، اور end to end لوڈنگ کی تصدیق کے لیے ڈیمو skill invoke کریں۔
+
+---
+
+## لنکس
+
+- [Agent Bay demo (سرکاری مثالی ریپوزٹری)](https://github.com/hum1st/agent-bay-demo)
 - [Agent Skills specification](https://agentskills.io)
 - [Anthropic example skills](https://github.com/anthropics/skills)
 
 ---
 
-## License
+## لائسنس
 
-[MIT](../LICENSE)
+[MIT](./LICENSE)
 
 <!-- agent-bay-readme-locale:ur via readme-translations-write -->
