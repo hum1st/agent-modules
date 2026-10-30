@@ -13,11 +13,11 @@ description: >-
 一次完成：
 
 1. **npm 包**：对比 registry 最新版与当前全局安装的 `agent-modules`；若有新版本则 **`npm install -g agent-modules@<latest>`**。
-2. **内置 skills**：将 npm 包内 **`skills/agent-modules*`** 同步到各已检测 Agent 的**全局** skills 目录（有变更才复制，已是最新则跳过）。
+2. **内置 skills**：将 npm 包内 **`skills/agent-modules*`** 以**链接 `SKILL.md`** 安装到各已检测 Agent 的**全局** skills 目录（指向 npm 包内源目录；有变更才更新，已是最新则跳过）。
 3. **订阅仓库**：读取 **`~/.agentModules`** 内部订阅中每一项（**`scope: global`** 或 **`scope: project`** + 项目路径）：
    - 在 **`~/.agentModules/sources/<host>/<org>/<repo>`** 执行 **`git pull --ff-only`**（未 clone 则 clone）；
    - 若仓库根目录有 **`package.json`**，安装依赖：优先 **`packageManager`**，否则 lockfile（`pnpm-lock.yaml` → `pnpm install`，`yarn.lock` → `yarn install`，`bun.lock` / `bun.lockb` → `bun install`），都没有则 **`npm install`**。无 **`package.json`** 则跳过；
-   - 按仓库 **`config.yaml`** 的 **`prefixes`**（无则 fallback）将 **skills/**、**rules/** 同步到对应目录。
+   - 按仓库 **`config.yaml`** 的 **`prefixes`**（无则 fallback）将 **skills/** 以**链接 `SKILL.md`** 写入 global/project 目录（**不复制** `scripts/` 等；运行脚本请用克隆根路径）；**rules/** 仍复制 `.mdc` 到对应 rules 目录。
 
 ## 前置
 
@@ -52,4 +52,4 @@ agent-modules refresh --no-upgrade
 
 - **不要**向用户推荐已移除的 **`sync`** 子命令；全量同步仅通过本 skill 调用 **`agent-modules refresh`**。
 - **不要**向用户展示或建议手改 **`~/.agentModules`** 内配置；订阅用 **`/agent-modules-add`**。
-- **不要**手改带 **`DO_NOT_EDIT.md`** 的已同步副本；改 Git 源后再次 **`/agent-modules-sync`**。
+- **不要**手改 global/project 下由 Agent Modules 写入的 **skill 链接 `SKILL.md`**；改 Git 源仓库中的 skill 后再次 **`/agent-modules-sync`**。

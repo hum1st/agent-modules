@@ -161,8 +161,49 @@ test('repo config prefixes override fallback and filter skills', async () => {
       skipDetect: true,
     });
 
-    assert.ok(fs.existsSync(path.join(skillsTarget, 'agent-modules-fixture/SKILL.md')));
+    const linked = path.join(skillsTarget, 'agent-modules-fixture/SKILL.md');
+    assert.ok(fs.existsSync(linked));
+    const linkText = fs.readFileSync(linked, 'utf8');
+    assert.match(linkText, /agent-modules-skill-link: v1/);
+    assert.match(linkText, new RegExp(fixtureRoot.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     assert.ok(!fs.existsSync(path.join(skillsTarget, 'other-skill')));
+  } finally {
+    fs.rmSync(fixtureRoot, { recursive: true, force: true });
+    fs.rmSync(home, { recursive: true, force: true });
+  }
+});
+
+test('sync replaces stale full skill tree with link-only SKILL.md', async () => {
+  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'agent-modules-link-'));
+  const home = makeIsolatedHome();
+  const { syncRepoToTarget } = await import('../cli/lib/sync-tree.mjs');
+  try {
+    fs.mkdirSync(path.join(fixtureRoot, 'skills/ly-fixture'), { recursive: true });
+    fs.writeFileSync(
+      path.join(fixtureRoot, 'skills/ly-fixture/SKILL.md'),
+      minimalSkillMd('ly-fixture'),
+    );
+    const skillsTarget = path.join(home, '.cursor/skills');
+    const dest = path.join(skillsTarget, 'ly-fixture');
+    fs.mkdirSync(dest, { recursive: true });
+    fs.writeFileSync(path.join(dest, 'SKILL.md'), '# stale copy\n');
+    fs.mkdirSync(path.join(dest, 'scripts'), { recursive: true });
+    fs.writeFileSync(path.join(dest, 'scripts/run.mjs'), 'import "missing"\n');
+
+    syncRepoToTarget({
+      agentId: 'cursor',
+      skillsTarget,
+      rulesTarget: null,
+      repoRoot: fixtureRoot,
+      repoUrl: 'https://github.com/example/fixture.git',
+      prefixes: ['ly'],
+      detect: () => true,
+      skipDetect: true,
+    });
+
+    assert.ok(!fs.existsSync(path.join(dest, 'scripts')));
+    assert.equal(fs.readdirSync(dest).length, 1);
+    assert.match(fs.readFileSync(path.join(dest, 'SKILL.md'), 'utf8'), /agent-modules-skill-link: v1/);
   } finally {
     fs.rmSync(fixtureRoot, { recursive: true, force: true });
     fs.rmSync(home, { recursive: true, force: true });

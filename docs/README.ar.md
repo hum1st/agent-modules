@@ -16,6 +16,8 @@
 
 # Agent Modules
 
+# Agent Modules
+
 **Agent Modules** — **skills** و **rules** لوكلاء البرمجة (Cursor وClaude Code وCodex وGitHub Copilot وغيرها)، من Git.
 
 ---
@@ -66,5 +68,7 @@ agent-modules
 ## الترخيص
 
 [MIT](https://github.com/hum1st/agent-modules/blob/main/LICENSE)
+
+<!-- agent-modules-readme-locale:ar via readme-translations-write -->
 
 <!-- agent-modules-readme-locale:ar via readme-translations-write -->

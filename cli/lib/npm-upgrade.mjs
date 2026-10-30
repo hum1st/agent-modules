@@ -3,8 +3,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { packageRoot } from './paths.mjs';
 
-/** @returns {string | null} */
-export function readInstalledVersion() {
+/** @returns {string | null} 当前正在执行的 CLI 包版本 */
+export function readRunningCliVersion() {
   const candidates = [];
   if (process.env.AGENT_MODULES_ROOT) {
     candidates.push(path.join(process.env.AGENT_MODULES_ROOT, 'package.json'));
@@ -17,6 +17,31 @@ export function readInstalledVersion() {
     }
   }
   return null;
+}
+
+/** @returns {string | null} 全局 npm 安装的 agent-modules 版本（/agent-modules-sync 升级对比用） */
+export function readGlobalInstalledVersion() {
+  const r = spawnSync('npm', ['list', '-g', 'agent-modules', '--json', '--depth=0'], {
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  if (r.status === 0) {
+    try {
+      const parsed = JSON.parse(r.stdout || '{}');
+      const entry = parsed.dependencies?.['agent-modules'];
+      if (entry?.version) {
+        return String(entry.version);
+      }
+    } catch {
+      /* fall through */
+    }
+  }
+  return readRunningCliVersion();
+}
+
+/** @returns {string | null} */
+export function readInstalledVersion() {
+  return readGlobalInstalledVersion();
 }
 
 /** @returns {number[]} */

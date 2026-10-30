@@ -16,6 +16,8 @@
 
 # Agent Modules
 
+# Agent Modules
+
 **Agent Modules** — **skills** et **rules** pour les coding agents (Cursor, Claude Code, Codex, GitHub Copilot, etc.), depuis Git.
 
 ---
@@ -66,5 +68,7 @@ Ne modifiez pas **`~/.agentModules`** à la main ; utilisez **`/agent-modules-ad
 ## Licence
 
 [MIT](https://github.com/hum1st/agent-modules/blob/main/LICENSE)
+
+<!-- agent-modules-readme-locale:fr via readme-translations-write -->
 
 <!-- agent-modules-readme-locale:fr via readme-translations-write -->

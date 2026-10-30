@@ -58,4 +58,4 @@ agent-modules add URL --scope project
 ## 禁止
 
 - **不要**向用户推荐 **`agent-modules add`** 作为日常操作说明；用户应通过 **`/agent-modules-add`** 由 Agent 执行上述命令。
-- **不要**手改已同步的 skill/rule 目录；改源仓库后 **`/agent-modules-sync`**。
+- **不要**手改 Agent 目录下的 **skill 链接 `SKILL.md`**；改 **`~/.agentModules/sources/...`** 源仓库后 **`/agent-modules-sync`**。rules 副本仍随同步覆盖。

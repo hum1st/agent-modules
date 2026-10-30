@@ -32,7 +32,7 @@ Run the following **in order** in macOS Terminal, Linux, Git Bash, or PowerShell
 # Install the Agent Modules CLI from the npm registry.
 npm install -g agent-modules
 
-# One-time setup: create ~/.agentModules and copy bundled agent-modules* skills
+# One-time setup: create ~/.agentModules and install bundled agent-modules* skill links
 # into each detected agent’s global skills folder (Cursor, Claude Code, Copilot CLI, Codex).
 agent-modules
 ```

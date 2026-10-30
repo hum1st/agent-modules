@@ -16,6 +16,8 @@
 
 # Agent Modules
 
+# Agent Modules
+
 **Agent Modules** — coding agents کے لیے **skills** اور **rules** (Cursor، Claude Code، Codex، GitHub Copilot وغیرہ)، Git سے۔
 
 ---
@@ -66,5 +68,7 @@ Cursor یا کسی اور supported agent میں **`/agent-modules-add`** چلا
 ## لائسنس
 
 [MIT](https://github.com/hum1st/agent-modules/blob/main/LICENSE)
+
+<!-- agent-modules-readme-locale:ur via readme-translations-write -->
 
 <!-- agent-modules-readme-locale:ur via readme-translations-write -->

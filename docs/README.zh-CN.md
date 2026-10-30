@@ -16,6 +16,8 @@
 
 # Agent Modules
 
+# Agent Modules
+
 **Agent Modules** — 面向 coding agent 的 **skills** 与 **rules**（Cursor、Claude Code、Codex、GitHub Copilot 等），源自 Git。
 
 ---
@@ -66,5 +68,7 @@ agent-modules
 ## 许可证
 
 [MIT](https://github.com/hum1st/agent-modules/blob/main/LICENSE)
+
+<!-- agent-modules-readme-locale:zh-CN via readme-translations-write -->
 
 <!-- agent-modules-readme-locale:zh-CN via readme-translations-write -->

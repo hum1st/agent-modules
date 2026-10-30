@@ -10,7 +10,7 @@ alwaysApply: true
 ## 目录分工
 
 - **`cli/`**：Node CLI。用户仅使用无参 **`agent-modules`**（初始化并同步内置 skills）；内部子命令 **`refresh`**、**`add`** 等由 Agent Skills 调用。
-- **`skills/`**：随 npm 包发布的 Agent Skills（`agent-modules*` 等）；内置 skills 由 **`agent-modules`** 写入各 Agent 全局目录。
+- **`skills/`**：随 npm 包发布的 Agent Skills（`agent-modules*` 等）；同步时在 Agent global/project 目录仅写入指向源目录的 **skill 链接 `SKILL.md`**（不复制 `scripts/`）。
 - **`scripts/`**：仓库**内部**维护工具（README 翻译校验、集成测试等），**不得**作为用户或 skill 的主入口。
 
 ## 贡献者本地运行
@@ -35,7 +35,7 @@ alwaysApply: true
 
 ## Skill 与 CLI 分工
 
-- **Skill（`SKILL.md`）**：说明何时 invoke、参数与范围（global / project）、禁止手改已同步副本等策略。
+- **Skill（`SKILL.md`）**：说明何时 invoke、参数与范围（global / project）；Agent 侧为链接文件，正文与脚本在 Git 克隆 / npm 包源目录。
 - **CLI**：承载 clone、配置读写、按前缀同步 skills/rules；skill 中给出的命令必须与本仓库 **`cli/`** 实现一致。
 
 ## 例外

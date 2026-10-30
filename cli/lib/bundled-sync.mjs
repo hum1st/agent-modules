@@ -1,10 +1,26 @@
+import fs from 'node:fs';
 import os from 'node:os';
+import path from 'node:path';
 import { globalAgentTargets } from './agents.mjs';
 import { packageRoot } from './paths.mjs';
 import { syncRepoToTarget } from './sync-tree.mjs';
 
+function bundledRepoUrl(repoRoot) {
+  try {
+    const pkg = JSON.parse(fs.readFileSync(path.join(repoRoot, 'package.json'), 'utf8'));
+    const raw = pkg.repository?.url || pkg.homepage;
+    if (!raw || typeof raw !== 'string') {
+      return undefined;
+    }
+    return raw.replace(/^git\+/, '').replace(/\.git$/, '');
+  } catch {
+    return undefined;
+  }
+}
+
 export function syncBundledSkills({ log = console.log } = {}) {
   const repoRoot = packageRoot();
+  const repoUrl = bundledRepoUrl(repoRoot);
   const home =
     process.env.HOME ||
     process.env.USERPROFILE ||
@@ -21,6 +37,7 @@ export function syncBundledSkills({ log = console.log } = {}) {
       skillsTarget: t.skillsDir,
       rulesTarget: t.rulesDir,
       repoRoot,
+      repoUrl,
       prefixes: ['agent-modules'],
       detect: t.detect,
     });

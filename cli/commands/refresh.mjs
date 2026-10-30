@@ -106,6 +106,7 @@ export function runRefresh(options = {}) {
         skillsTarget: t.skillsDir,
         rulesTarget: t.rulesDir,
         repoRoot: dest,
+        repoUrl: url,
         prefixes,
         detect: t.detect,
         skipDetect: scope === 'project',
